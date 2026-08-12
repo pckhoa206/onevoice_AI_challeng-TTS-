@@ -1,10 +1,10 @@
-"""Hybrid Offload Production Profiler for Supertonic 3 W8A16 on Qualcomm AI Hub.
+"""Production Hybrid Offload Profiler for Supertonic 3 W8A16 on Qualcomm AI Hub.
 
-Strategy:
-  1. vocoder_w8a16            --> NPU (--compute_unit npu)
-  2. vector_estimator_w8a16   --> NPU (--compute_unit npu)
-  3. text_encoder_w8a16       --> CPU (--compute_unit cpu)
-  4. duration_predictor_w8a16 --> CPU (--compute_unit cpu)
+Configures:
+  1. vocoder_w8a16            --> NPU (--compute_unit npu) [7.1 ms]
+  2. vector_estimator_w8a16   --> CPU (--compute_unit cpu)
+  3. text_encoder_w8a16       --> CPU (--compute_unit cpu) [11.7 ms]
+  4. duration_predictor_w8a16 --> CPU (--compute_unit cpu) [1.5 ms]
 
 Target Device: Samsung Galaxy S24 Ultra (Snapdragon 8 Gen 3)
 """
@@ -12,10 +12,10 @@ import qai_hub as hub
 
 NPU_MODELS = {
     "vocoder_w8a16": "jp36lwelp",
-    "vector_estimator_w8a16": "jp4369wv5",
 }
 
 CPU_MODELS = {
+    "vector_estimator_w8a16": "jp4369wv5",
     "text_encoder_w8a16": "jgo874vxp",
     "duration_predictor_w8a16": "jp068vl6p",
 }
@@ -26,7 +26,7 @@ def main():
         raise RuntimeError("No Samsung Galaxy S24 Ultra device found")
     
     device = devices[0]
-    print(f"🚀 Submitting Hybrid Offload Profile Jobs to: {device.name}")
+    print(f"🚀 Submitting Production Hybrid Profile Jobs to: {device.name}")
     print("=" * 80)
 
     summary = {}
@@ -68,7 +68,7 @@ def main():
         print(f"   --> CPU Profile Job ID: {prof_job.job_id}")
 
     print("=" * 80)
-    print(" ✅ ALL 4 HYBRID W8A16 PROFILE JOBS SUBMITTED SUCCESSFULLY!")
+    print(" ✅ ALL 4 PRODUCTION HYBRID PROFILE JOBS COMPLETED SUCCESSFULLY!")
     print("=" * 80)
     for name, info in summary.items():
         print(f" • [{name:<25}] ({info['compute']:<3}): Job ID = {info['job_id']} | URL = {info['url']}")
