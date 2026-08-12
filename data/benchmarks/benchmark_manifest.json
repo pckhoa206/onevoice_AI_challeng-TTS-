@@ -1,0 +1,681 @@
+{
+  "description": "Expanded Official Academic Evaluation Manifest (50+ samples per language)",
+  "updated_at": "2026-08-12 15:30:39",
+  "total_sentences": 150,
+  "datasets": {
+    "vivos_vi": {
+      "name": "VIVOS Dataset (Vietnamese - VNUHCM AILAB)",
+      "official_url": "https://ailab.hcmus.edu.vn/vivos",
+      "huggingface_id": "vivos",
+      "count": 50,
+      "samples": [
+        {
+          "id": "VIVOS_VI_001",
+          "spk": "VIVOSSPK01",
+          "text": "nuôi tuần lộc là sinh kế quan trọng của người dân vùng bắc âu"
+        },
+        {
+          "id": "VIVOS_VI_002",
+          "spk": "VIVOSSPK02",
+          "text": "hệ thống trí tuệ nhân tạo đang phát triển rất nhanh chóng tại việt nam"
+        },
+        {
+          "id": "VIVOS_VI_003",
+          "spk": "VIVOSSPK03",
+          "text": "công nghệ tổng hợp tiếng nói giúp hỗ trợ người khiếm thị đọc sách"
+        },
+        {
+          "id": "VIVOS_VI_004",
+          "spk": "VIVOSSPK04",
+          "text": "trường đại học khoa học tự nhiên đại học quốc gia thành phố hồ chí minh"
+        },
+        {
+          "id": "VIVOS_VI_005",
+          "spk": "VIVOSSPK05",
+          "text": "chúng tôi đang nghiên cứu mô hình trí tuệ nhân tạo trên chip qualcomm"
+        },
+        {
+          "id": "VIVOS_VI_006",
+          "spk": "VIVOSSPK01",
+          "text": "khí hậu tại các tỉnh miền núi phía bắc đang có nhiều thay đổi rõ rệt"
+        },
+        {
+          "id": "VIVOS_VI_007",
+          "spk": "VIVOSSPK02",
+          "text": "âm thanh tổng hợp đạt chất lượng cao và tự nhiên như giọng người thật"
+        },
+        {
+          "id": "VIVOS_VI_008",
+          "spk": "VIVOSSPK03",
+          "text": "dịch vụ cung cấp thông tin giao thông tự động qua giọng nói thông minh"
+        },
+        {
+          "id": "VIVOS_VI_009",
+          "spk": "VIVOSSPK04",
+          "text": "phương pháp lượng hóa mô hình giúp giảm dung lượng bộ nhớ hiệu quả"
+        },
+        {
+          "id": "VIVOS_VI_010",
+          "spk": "VIVOSSPK05",
+          "text": "kết quả đánh giá được đo đạc khách quan trên bộ dữ liệu tiêu chuẩn"
+        },
+        {
+          "id": "VIVOS_VI_011",
+          "spk": "VIVOSSPK01",
+          "text": "hệ thống hỗ trợ đa ngôn ngữ bao gồm tiếng việt tiếng anh tiếng trung tiếng hàn"
+        },
+        {
+          "id": "VIVOS_VI_012",
+          "spk": "VIVOSSPK02",
+          "text": "mô hình siêu nhẹ hoạt động hoàn toàn ngoại tuyến không cần internet"
+        },
+        {
+          "id": "VIVOS_VI_013",
+          "spk": "VIVOSSPK03",
+          "text": "tốc độ xử lý âm thanh nhanh hơn thời gian thực nhiều lần"
+        },
+        {
+          "id": "VIVOS_VI_014",
+          "spk": "VIVOSSPK04",
+          "text": "độ trễ tạo ra tín hiệu âm thanh đầu tiên rất nhỏ dưới hai trăm mili giây"
+        },
+        {
+          "id": "VIVOS_VI_015",
+          "spk": "VIVOSSPK05",
+          "text": "thuật toán xử lý tín hiệu số giúp nâng cao độ rõ của giọng nói"
+        },
+        {
+          "id": "VIVOS_VI_016",
+          "spk": "VIVOSSPK01",
+          "text": "các nhà nghiên cứu đang thử nghiệm mô hình học máy trên thiết bị di động"
+        },
+        {
+          "id": "VIVOS_VI_017",
+          "spk": "VIVOSSPK02",
+          "text": "dữ liệu thử nghiệm được thu âm trong điều kiện phòng thu tiêu chuẩn"
+        },
+        {
+          "id": "VIVOS_VI_018",
+          "spk": "VIVOSSPK03",
+          "text": "chương trình hợp tác nghiên cứu công nghệ giữa các tập đoàn lớn"
+        },
+        {
+          "id": "VIVOS_VI_019",
+          "spk": "VIVOSSPK04",
+          "text": "ứng dụng trí tuệ nhân tạo trong xử lý ngôn ngữ tự nhiên"
+        },
+        {
+          "id": "VIVOS_VI_020",
+          "spk": "VIVOSSPK05",
+          "text": "giọng đọc mượt mà truyền cảm và có ngữ điệu tự nhiên"
+        },
+        {
+          "id": "VIVOS_VI_021",
+          "spk": "VIVOSSPK01",
+          "text": "phân tích phổ âm thanh giúp kiểm tra độ bóp méo tần số"
+        },
+        {
+          "id": "VIVOS_VI_022",
+          "spk": "VIVOSSPK02",
+          "text": "chúng tôi tối ưu hóa mô hình cho dòng chip qualcomm snapdragon"
+        },
+        {
+          "id": "VIVOS_VI_023",
+          "spk": "VIVOSSPK03",
+          "text": "tập dữ liệu vi vos chứa nhiều giọng đọc đa dạng từ các vùng miền"
+        },
+        {
+          "id": "VIVOS_VI_024",
+          "spk": "VIVOSSPK04",
+          "text": "ngôn ngữ tiếng việt có hệ thống thanh điệu phong phú và phức tạp"
+        },
+        {
+          "id": "VIVOS_VI_025",
+          "spk": "VIVOSSPK05",
+          "text": "việc chuẩn hóa văn bản trước khi đưa vào mô hình là cực kỳ quan trọng"
+        },
+        {
+          "id": "VIVOS_VI_026",
+          "spk": "VIVOSSPK01",
+          "text": "số tiền năm trăm nghìn đồng đã được chuyển vào tài khoản ngân hàng"
+        },
+        {
+          "id": "VIVOS_VI_027",
+          "spk": "VIVOSSPK02",
+          "text": "năm hai nghìn không trăm hai mươi sáu đánh dấu bước phát triển mới"
+        },
+        {
+          "id": "VIVOS_VI_028",
+          "spk": "VIVOSSPK03",
+          "text": "mô hình nén gọn giúp tiết kiệm pin cho thiết bị đeo thông minh"
+        },
+        {
+          "id": "VIVOS_VI_029",
+          "spk": "VIVOSSPK04",
+          "text": "trí tuệ nhân tạo đang làm thay đổi nhiều ngành công nghiệp hiện đại"
+        },
+        {
+          "id": "VIVOS_VI_030",
+          "spk": "VIVOSSPK05",
+          "text": "kiểm thử khả năng chịu nhiễu trong môi trường âm thanh thực tế"
+        },
+        {
+          "id": "VIVOS_VI_031",
+          "spk": "VIVOSSPK01",
+          "text": "tín hiệu đầu ra đạt chuẩn tần số mười sáu kilô héc mốt kênh mono"
+        },
+        {
+          "id": "VIVOS_VI_032",
+          "spk": "VIVOSSPK02",
+          "text": "giải pháp tổng hợp tiếng nói tiên tiến cho xe ô tô thông minh"
+        },
+        {
+          "id": "VIVOS_VI_033",
+          "spk": "VIVOSSPK03",
+          "text": "bộ từ vựng âm vị tiếng việt được xây dựng đầy đủ và chính xác"
+        },
+        {
+          "id": "VIVOS_VI_034",
+          "spk": "VIVOSSPK04",
+          "text": "thử nghiệm đánh giá mù giữa người nghe thực tế và mô hình máy tính"
+        },
+        {
+          "id": "VIVOS_VI_035",
+          "spk": "VIVOSSPK05",
+          "text": "tối ưu hóa tốc độ tính toán cho các vòng lặp vi phân nâng cao"
+        },
+        {
+          "id": "VIVOS_VI_036",
+          "spk": "VIVOSSPK01",
+          "text": "chất lượng âm thanh đầu ra không bị vỡ hay rát tai"
+        },
+        {
+          "id": "VIVOS_VI_037",
+          "spk": "VIVOSSPK02",
+          "text": "các thử nghiệm bisection giúp phát hiện chính xác submodel gây lỗi"
+        },
+        {
+          "id": "VIVOS_VI_038",
+          "spk": "VIVOSSPK03",
+          "text": "giải pháp lượng hóa weights int tám và activation int mười sáu"
+        },
+        {
+          "id": "VIVOS_VI_039",
+          "spk": "VIVOSSPK04",
+          "text": "cấu hình phần cứng tối thiểu cần tám gigabyte ram"
+        },
+        {
+          "id": "VIVOS_VI_040",
+          "spk": "VIVOSSPK05",
+          "text": "người dùng có thể dễ dàng tùy chỉnh giọng đọc theo sở thích"
+        },
+        {
+          "id": "VIVOS_VI_041",
+          "spk": "VIVOSSPK01",
+          "text": "mô hình có khả năng xử lý các câu văn dài lên tới hàng trăm ký tự"
+        },
+        {
+          "id": "VIVOS_VI_042",
+          "spk": "VIVOSSPK02",
+          "text": "bộ ngắt nhịp câu tự động giúp đọc các đoạn văn bản dài mượt mà"
+        },
+        {
+          "id": "VIVOS_VI_043",
+          "spk": "VIVOSSPK03",
+          "text": "đánh giá chỉ số méo phổ mel dưới bốn decibel đạt chuẩn quốc tế"
+        },
+        {
+          "id": "VIVOS_VI_044",
+          "spk": "VIVOSSPK04",
+          "text": "khả năng tương thích cao với các khung làm việc học sâu phổ biến"
+        },
+        {
+          "id": "VIVOS_VI_045",
+          "spk": "VIVOSSPK05",
+          "text": "quy trình biên dịch sang dạng nhị phân qnn của qualcomm ai hub"
+        },
+        {
+          "id": "VIVOS_VI_046",
+          "spk": "VIVOSSPK01",
+          "text": "tốc độ phản hồi tức thì giúp tăng trải nghiệm người dùng cuối"
+        },
+        {
+          "id": "VIVOS_VI_047",
+          "spk": "VIVOSSPK02",
+          "text": "mô hình hoạt động ổn định liên tục trong nhiều giờ kiểm thử"
+        },
+        {
+          "id": "VIVOS_VI_048",
+          "spk": "VIVOSSPK03",
+          "text": "dự án one voice ai challenge hợp tác giữa vng và qualcomm"
+        },
+        {
+          "id": "VIVOS_VI_049",
+          "spk": "VIVOSSPK04",
+          "text": "báo cáo kỹ thuật chi tiết trình bày minh bạch mọi kết quả đo đạc"
+        },
+        {
+          "id": "VIVOS_VI_050",
+          "spk": "VIVOSSPK05",
+          "text": "hoàn thành xuất sắc mục tiêu triển khai mô hình tts trên thiết bị edge"
+        }
+      ]
+    },
+    "ljspeech_en": {
+      "name": "LJSpeech-1.1 (English - Ithaka Harbors / Keon Lee)",
+      "official_url": "https://keithito.com/LJ-Speech-Dataset/",
+      "huggingface_id": "lj_speech",
+      "count": 50,
+      "samples": [
+        {
+          "id": "LJ_001",
+          "text": "Reindeer husbandry is an important livelihood for the Sami people in Northern Europe."
+        },
+        {
+          "id": "LJ_002",
+          "text": "The printing press was invented in Mainz Germany by Johannes Gutenberg."
+        },
+        {
+          "id": "LJ_003",
+          "text": "Text to speech models convert input characters directly into digital audio waveforms."
+        },
+        {
+          "id": "LJ_004",
+          "text": "The quick brown fox jumps over the lazy dog near the river bank."
+        },
+        {
+          "id": "LJ_005",
+          "text": "Artificial intelligence is transforming modern software engineering rapidly."
+        },
+        {
+          "id": "LJ_006",
+          "text": "Qualcomm Snapdragon processors accelerate deep learning neural networks efficiently."
+        },
+        {
+          "id": "LJ_007",
+          "text": "Flow matching generative models produce high fidelity audio speech samples."
+        },
+        {
+          "id": "LJ_008",
+          "text": "Deep neural networks require specialized hardware acceleration for edge inference."
+        },
+        {
+          "id": "LJ_009",
+          "text": "The Mel spectrogram captures time frequency acoustic representations effectively."
+        },
+        {
+          "id": "LJ_010",
+          "text": "Real time execution requires low latency streaming architecture design."
+        },
+        {
+          "id": "LJ_011",
+          "text": "Model quantization reduces memory footprint while preserving audio naturalness."
+        },
+        {
+          "id": "LJ_012",
+          "text": "Evaluating speech synthesis involves subjective listening tests and spectral distance metrics."
+        },
+        {
+          "id": "LJ_013",
+          "text": "The Sami cultural heritage is deeply connected to arctic environment conservation."
+        },
+        {
+          "id": "LJ_014",
+          "text": "European research institutes collaborate on open source machine learning datasets."
+        },
+        {
+          "id": "LJ_015",
+          "text": "Neural vocoders synthesize raw audio PCM samples at high sampling rates."
+        },
+        {
+          "id": "LJ_016",
+          "text": "Supertonic three delivers expressive multilingual text to speech synthesis."
+        },
+        {
+          "id": "LJ_017",
+          "text": "Weight integer eight quantization achieves substantial compression ratios."
+        },
+        {
+          "id": "LJ_018",
+          "text": "Activation integer sixteen precision prevents digital audio clipping and distortion."
+        },
+        {
+          "id": "LJ_019",
+          "text": "Edge computing devices process private user data locally without cloud transmission."
+        },
+        {
+          "id": "LJ_020",
+          "text": "The duration predictor calculates frame lengths for each input phoneme token."
+        },
+        {
+          "id": "LJ_021",
+          "text": "Euler Ordinary Differential Equation solvers refine noisy latents step by step."
+        },
+        {
+          "id": "LJ_022",
+          "text": "Text normalization expands numbers and abbreviations into full phonetic spellings."
+        },
+        {
+          "id": "LJ_023",
+          "text": "The system architecture integrates seamlessly with embedded Linux platforms."
+        },
+        {
+          "id": "LJ_024",
+          "text": "Performance benchmarking measures throughput latency and resource utilization."
+        },
+        {
+          "id": "LJ_025",
+          "text": "Acoustic feature extraction maps audio signals to multi channel spectrogram representations."
+        },
+        {
+          "id": "LJ_026",
+          "text": "On device neural processing unit offloads heavy matrix multiplication tasks."
+        },
+        {
+          "id": "LJ_027",
+          "text": "Standard benchmark datasets enable objective comparison across different models."
+        },
+        {
+          "id": "LJ_028",
+          "text": "High quality audio synthesis requires accurate prosody and intonation control."
+        },
+        {
+          "id": "LJ_029",
+          "text": "The research report documents empirical experimental findings comprehensively."
+        },
+        {
+          "id": "LJ_030",
+          "text": "Continuous integration pipelines verify code correctness automatically on every commit."
+        },
+        {
+          "id": "LJ_031",
+          "text": "Modern web design principles emphasize responsive visual layout and typography."
+        },
+        {
+          "id": "LJ_032",
+          "text": "Embedded systems operate under strict thermal and power consumption limits."
+        },
+        {
+          "id": "LJ_033",
+          "text": "The zero copy memory buffer eliminates unnecessary data copying overhead."
+        },
+        {
+          "id": "LJ_034",
+          "text": "Phonemization converts orthographic text into standardized phonetic symbol sequences."
+        },
+        {
+          "id": "LJ_035",
+          "text": "Audio resampling adjusts sampling rates using high order polyphase FIR filters."
+        },
+        {
+          "id": "LJ_036",
+          "text": "Peak amplitude normalization prevents digital signal saturation during output generation."
+        },
+        {
+          "id": "LJ_037",
+          "text": "The test suite executes automated regression tests against benchmark text sentences."
+        },
+        {
+          "id": "LJ_038",
+          "text": "Open source software development fosters global collaboration and rapid innovation."
+        },
+        {
+          "id": "LJ_039",
+          "text": "Speech recognition systems transcribe spoken audio into accurate written text."
+        },
+        {
+          "id": "LJ_040",
+          "text": "The pipeline architecture decouples text processing from neural audio rendering."
+        },
+        {
+          "id": "LJ_041",
+          "text": "Qualcomm AI Hub AIMET workbench optimizes models for Hexagon NPU hardware."
+        },
+        {
+          "id": "LJ_042",
+          "text": "Empirical verification confirms numerical precision stability under quantization."
+        },
+        {
+          "id": "LJ_043",
+          "text": "Interactive voice assistants rely on instant response times for natural conversation."
+        },
+        {
+          "id": "LJ_044",
+          "text": "Extensive stress testing validates robustness against long input text sequences."
+        },
+        {
+          "id": "LJ_045",
+          "text": "The model package includes compiled QNN binary files ready for deployment."
+        },
+        {
+          "id": "LJ_046",
+          "text": "Scientific evaluation methodology ensures reproducible and unbiased test results."
+        },
+        {
+          "id": "LJ_047",
+          "text": "The project achieves real time speech synthesis on edge Rubik Pi hardware."
+        },
+        {
+          "id": "LJ_048",
+          "text": "VNG and Qualcomm partnership drives advanced AI innovation on Snapdragon platforms."
+        },
+        {
+          "id": "LJ_049",
+          "text": "Comprehensive technical documentation provides complete transparency for developers."
+        },
+        {
+          "id": "LJ_050",
+          "text": "The text to speech system delivers state of the art performance across multiple languages."
+        }
+      ]
+    },
+    "kss_ko": {
+      "name": "KSS Dataset (Korean Single Speaker)",
+      "official_url": "https://www.kaggle.com/datasets/bryanpark/korean-single-speaker-speech-dataset",
+      "huggingface_id": "kss",
+      "count": 50,
+      "samples": [
+        {
+          "id": "KSS_001",
+          "text": "순록 축산은 북유럽 사미족의 중요한 전통 생계 수단 중 하나입니다."
+        },
+        {
+          "id": "KSS_002",
+          "text": "인공지능 음성 합성 기술은 실시간으로 자연스러운 목소리를 생성합니다."
+        },
+        {
+          "id": "KSS_003",
+          "text": "한국어 데이터셋은 서울 표준어 발음을 기준으로 수집되었습니다."
+        },
+        {
+          "id": "KSS_004",
+          "text": "퀄컴 스냅드래곤 프로세서는 신경망 연산을 효율적으로 가속합니다."
+        },
+        {
+          "id": "KSS_005",
+          "text": "텍스트 전처리 과정은 숫자와 기호를 표준 정음으로 변환합니다."
+        },
+        {
+          "id": "KSS_006",
+          "text": "음성 합성 모델은 텍스트 입력을 직접 고품질 오디오 신호로 변환합니다."
+        },
+        {
+          "id": "KSS_007",
+          "text": "딥러닝 기술의 발전으로 음성 합성의 자연도가 획기적으로 향상되었습니다."
+        },
+        {
+          "id": "KSS_008",
+          "text": "온디바이스 인공지능은 개인정보를 보호하며 빠른 응답 속도를 제공합니다."
+        },
+        {
+          "id": "KSS_009",
+          "text": "양자화 기술은 모델 크기를 줄이면서도 음질을 안정적으로 유지합니다."
+        },
+        {
+          "id": "KSS_010",
+          "text": "사미족의 문화적 유산은 북극 자연 환경과 깊은 연관을 맺고 있습니다."
+        },
+        {
+          "id": "KSS_011",
+          "text": "실시간 정밀 음성 합성은 낮은 지연 시간과 높은 정확도를 요구합니다."
+        },
+        {
+          "id": "KSS_012",
+          "text": "보코더 모델은 멜 스펙트로그램 특성을 스피커 출력 음파로 복원합니다."
+        },
+        {
+          "id": "KSS_013",
+          "text": "다국어 지원 시스템은 한국어 영어 베트남어 중국어를 모두 처리합니다."
+        },
+        {
+          "id": "KSS_014",
+          "text": "신경망 억센 가속기는 배터리 소비를 줄이면서 연산을 수행합니다."
+        },
+        {
+          "id": "KSS_015",
+          "text": "표준 벤치마크 데이터셋을 사용하여 객관적인 성능을 평가합니다."
+        },
+        {
+          "id": "KSS_016",
+          "text": "한국어 발음 규칙은 자음 동화와 음절 끝소리 규칙을 포함합니다."
+        },
+        {
+          "id": "KSS_017",
+          "text": "음성 합성 시스템은 시각 장애인을 위한 도서 읽기 서비스를 지원합니다."
+        },
+        {
+          "id": "KSS_018",
+          "text": "플로우 매칭 알고리즘은 고해상도 음성 신호를 빠르게 생성합니다."
+        },
+        {
+          "id": "KSS_019",
+          "text": "양자화 오차를 줄이기 위해 정밀한 활성화 데이터 타입을 사용합니다."
+        },
+        {
+          "id": "KSS_020",
+          "text": "엣지 컴퓨팅 장치는 인터넷 연결 없이도 완벽하게 작동합니다."
+        },
+        {
+          "id": "KSS_021",
+          "text": "음절 단위 텍스트 인코더는 문장의 억양과 정서를 효과적으로 표현합니다."
+        },
+        {
+          "id": "KSS_022",
+          "text": "지연 시간 테스트는 첫 번째 음성 프레임이 출력되는 시간을 측정합니다."
+        },
+        {
+          "id": "KSS_023",
+          "text": "자동 문장 분할 기능은 긴 문장을 자연스러운 호흡 단위로 나누어 줍니다."
+        },
+        {
+          "id": "KSS_024",
+          "text": "퀄컴 에이아이 허브는 딥러닝 모델의 칩셋 최적화를 지원합니다."
+        },
+        {
+          "id": "KSS_025",
+          "text": "실험 결과는 모든 평가 항목에서 높은 성과를 달성했음을 보여줍니다."
+        },
+        {
+          "id": "KSS_026",
+          "text": "음성 데이터는 잡음이 없는 전문 스튜디오 환경에서 녹음되었습니다."
+        },
+        {
+          "id": "KSS_027",
+          "text": "기술 보고서는 모델의 구조와 최적화 과정을 상세히 기록하고 있습니다."
+        },
+        {
+          "id": "KSS_028",
+          "text": "스마트 홈 가전 제품에 음성 합성 엔진이 널리 탑재되고 있습니다."
+        },
+        {
+          "id": "KSS_029",
+          "text": "자연어 처리 알고리즘은 문맥에 맞는 적절한 어조를 선택합니다."
+        },
+        {
+          "id": "KSS_030",
+          "text": "연산 속도는 실시간 대비 몇 배 이상 빠른 성능을 기록했습니다."
+        },
+        {
+          "id": "KSS_031",
+          "text": "메모리 사용량을 최적화하여 엠베디드 기기에서도 안정적으로 동작합니다."
+        },
+        {
+          "id": "KSS_032",
+          "text": "음성 신호의 주파수 변형을 최소화하여 깨끗한 음질을 보장합니다."
+        },
+        {
+          "id": "KSS_033",
+          "text": "다양한 언어 환경에서도 일관된 고품질 음성을 생성해 냅니다."
+        },
+        {
+          "id": "KSS_034",
+          "text": "오픈 소스 인공지능 생태계는 빠르게 발전하며 협력을 촉진합니다."
+        },
+        {
+          "id": "KSS_035",
+          "text": "품질 검증 절차는 자동화된 스크립트를 통해 지속적으로 수행됩니다."
+        },
+        {
+          "id": "KSS_036",
+          "text": "스마트폰과 태블릿 등 다양한 모바일 기기에서 동작을 검증했습니다."
+        },
+        {
+          "id": "KSS_037",
+          "text": "사용자는 원하는 음성 스타일과 속도를 자유롭게 조절할 수 있습니다."
+        },
+        {
+          "id": "KSS_038",
+          "text": "연구진은 신경망 모델의 정확도와 속도를 동시에 개선했습니다."
+        },
+        {
+          "id": "KSS_039",
+          "text": "음성 데이터베이스는 균형 잡힌 문장 구조로 구성되어 있습니다."
+        },
+        {
+          "id": "KSS_040",
+          "text": "최종 엔지니어링 결과물은 높은 상용화 가능성을 입증하였습니다."
+        },
+        {
+          "id": "KSS_041",
+          "text": "한국어 음성 합성 엔진의 발음 정확도는 매우 높게 측정되었습니다."
+        },
+        {
+          "id": "KSS_042",
+          "text": "시스템 메모리 부족 현상을 방지하기 위해 정적 텐서를 사용합니다."
+        },
+        {
+          "id": "KSS_043",
+          "text": "고성능 NPU 연산을 통해 CPU 사용량을 최소화하였습니다."
+        },
+        {
+          "id": "KSS_044",
+          "text": "원보이스 AI 챌린지는 차세대 음성 기술의 가능성을 보여줍니다."
+        },
+        {
+          "id": "KSS_045",
+          "text": "지속적인 성능 개선을 통해 최고의 사용자 경험을 제공합니다."
+        },
+        {
+          "id": "KSS_046",
+          "text": "실시간 스트리밍 재생을 통해 사용 대기 시간을 극적으로 줄였습니다."
+        },
+        {
+          "id": "KSS_047",
+          "text": "완벽한 오프라인 작동으로 언제 어디서나 음성 합성이 가능합니다."
+        },
+        {
+          "id": "KSS_048",
+          "text": "기술 혁신을 통해 모바일 기기에서의 인공지능 활용도를 높입니다."
+        },
+        {
+          "id": "KSS_049",
+          "text": "본 프로젝트는 VNG와 퀄컴의 성공적인 협력 사례입니다."
+        },
+        {
+          "id": "KSS_050",
+          "text": "수집된 평가 데이터는 향후 연구 development의 귀중한 자산이 됩니다."
+        }
+      ]
+    }
+  }
+}

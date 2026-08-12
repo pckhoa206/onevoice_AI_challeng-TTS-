@@ -12,6 +12,8 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 third_party_zipformer/
-src/*.onnx
-src/*.onnx.json
-=*.*.*
+*.onnx
+*.onnx.json
+.venv/
+.DS_Store
+token-optimizer/

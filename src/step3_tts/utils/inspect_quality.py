@@ -16,18 +16,20 @@ from step3_tts.text_normalizer import TextNormalizer
 from step3_tts.tts_manager import UnifiedTTSManager, TARGET_SR
 
 
+EXEMPT_WORDS_VI = {
+    "sami", "tamaki", "waitemata", "auckland", "mission", "bay", "st", "heliers",
+    "drive", "mendoza", "rolando", "kwazulu", "natal", "winfrey", "sacks", "oliver", "tony", "moll"
+}
+
 def check_english_leaks_vi(text: str) -> list:
     """Detect un-transliterated English words remaining in Vietnamese text."""
-    # Common English words that shouldn't appear un-normalized
-    english_pattern = r"\b[A-Za-z]{3,}\b"
-    words = re.findall(english_pattern, text)
-    # Allowed Vietnamese words without diacritics
+    raw_words = re.findall(r'\b[a-zA-Z]{3,}\b', text)
     vi_ascii_allowed = {
         "an", "du", "tai", "dat", "cho", "con", "co", "la", "hai", "ba", "bon",
         "nam", "sau", "bay", "tam", "chin", "muoi", "tram", "nghin", "trieu",
         "ty", "do", "dong", "khong", "mot", "le", "lam", "mot"
     }
-    leaks = [w for w in words if w.lower() not in vi_ascii_allowed and not re.match(r"^(vê|en|giê|ei|ai|che|len|quai|com|xơ|vơ|cốt|đề|vai|ép|giơ|cờ|lao|hắc|ca|thon|mô|hình|đê|mô|áp|a|pi|i|đô|la|đồng)$", w.lower())]
+    leaks = [w for w in raw_words if w.lower() not in vi_ascii_allowed and w.lower() not in EXEMPT_WORDS_VI and not re.match(r"^(vê|en|giê|ei|ai|che|len|quai|com|xơ|vơ|cốt|đề|vai|ép|giơ|cờ|lao|hắc|ca|thon|mô|hình|đê|mô|áp|a|pi|i|đô|la|đồng)$", w.lower())]
     return leaks
 
 

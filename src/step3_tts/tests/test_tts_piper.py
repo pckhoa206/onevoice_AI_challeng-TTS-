@@ -32,13 +32,10 @@ def synth_voice(short_lang, voice_name, rows):
     # PiperVoice.load() needs a local .onnx/.json pair -- it does not
     # auto-download despite some docs implying otherwise. download_voices
     # is a no-op if the voice is already present.
-    print(f"[test_tts_piper] downloading voice {voice_name} if not cached...")
-    subprocess.run([sys.executable, "-m", "piper.download_voices", voice_name], check=True)
-
-    # download_voices saves <name>.onnx + <name>.onnx.json -- PiperVoice.load()
-    # derives the config path by appending ".json" to whatever we pass it, so
-    # it must be given the .onnx filename itself, not the bare voice name.
-    onnx_path = f"{voice_name}.onnx"
+    model_dir_path = os.path.join(ROOT, "models", "piper", f"{voice_name}.onnx")
+    onnx_path = model_dir_path if os.path.exists(model_dir_path) else f"{voice_name}.onnx"
+    if not os.path.exists(onnx_path):
+        subprocess.run([sys.executable, "-m", "piper.download_voices", voice_name], check=True)
     print(f"[test_tts_piper] loading voice {onnx_path}...")
     voice = PiperVoice.load(onnx_path)
 

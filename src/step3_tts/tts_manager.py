@@ -98,7 +98,8 @@ class UnifiedTTSManager:
         else:
             voice_name = "en_US-amy-medium"
 
-        onnx_path = f"{voice_name}.onnx"
+        model_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "models", "piper", f"{voice_name}.onnx")
+        onnx_path = model_dir_path if os.path.exists(model_dir_path) else f"{voice_name}.onnx"
 
         if not os.path.exists(onnx_path):
             import subprocess
