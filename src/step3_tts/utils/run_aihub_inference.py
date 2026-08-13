@@ -1,9 +1,9 @@
 """Run Cloud On-Device Inference on Qualcomm AI Hub for all 4 Supertonic 3 W8A16 Submodels.
 
-Configured with exact matching tensor shapes:
+Configured with exact matching tensor shapes & dtypes:
   1. vocoder_w8a16            (latent: 1 x 144 x 64 float32)
-  2. text_encoder_w8a16       (text_ids: 1 x 64 int32, style_ttl: 1 x 50 x 256 float32, speed: 1 float32)
-  3. duration_predictor_w8a16 (text_ids: 1 x 64 int32, style_ttl: 1 x 50 x 256 float32, speed: 1 float32)
+  2. text_encoder_w8a16       (text_ids: 1 x 64 int64, style_ttl: 1 x 50 x 256 float32, speed: 1 float32)
+  3. duration_predictor_w8a16 (text_ids: 1 x 64 int64, style_ttl: 1 x 50 x 256 float32, speed: 1 float32)
   4. vector_estimator_w8a16   (noisy_latent: 1 x 144 x 64 float32, text_emb: 1 x 256 x 64 float32, style_ttl: 1 x 50 x 256 float32, latent_mask: 1 x 1 x 64 float32, text_mask: 1 x 1 x 64 float32, current_step: 1 float32, total_step: 1 float32)
 
 Target Device: Samsung Galaxy S24 Ultra (Snapdragon 8 Gen 3)
@@ -36,13 +36,13 @@ def main():
     # 2. Text Encoder W8A16
     job_te = hub.get_job("jgo874vxp")
     model_te = job_te.get_target_model()
-    text_ids_64 = np.ones((1, 64), dtype=np.int32)
+    text_ids_int64 = np.ones((1, 64), dtype=np.int64)
     style_ttl_data = np.random.randn(1, 50, 256).astype(np.float32)
     speed_data = np.array([1.0], dtype=np.float32)
     print(" • [2/4] Submitting INFERENCE for [text_encoder_w8a16]...")
     inf_te = hub.submit_inference_job(
         model=model_te,
-        inputs=dict(text_ids=[text_ids_64], style_ttl=[style_ttl_data], speed=[speed_data]),
+        inputs=dict(text_ids=[text_ids_int64], style_ttl=[style_ttl_data], speed=[speed_data]),
         device=device
     )
     inf_te.set_name("[OFFICIAL_INFERENCE] Supertonic3_text_encoder_w8a16")
@@ -54,7 +54,7 @@ def main():
     print(" • [3/4] Submitting INFERENCE for [duration_predictor_w8a16]...")
     inf_dp = hub.submit_inference_job(
         model=model_dp,
-        inputs=dict(text_ids=[text_ids_64], style_ttl=[style_ttl_data], speed=[speed_data]),
+        inputs=dict(text_ids=[text_ids_int64], style_ttl=[style_ttl_data], speed=[speed_data]),
         device=device
     )
     inf_dp.set_name("[OFFICIAL_INFERENCE] Supertonic3_duration_predictor_w8a16")
