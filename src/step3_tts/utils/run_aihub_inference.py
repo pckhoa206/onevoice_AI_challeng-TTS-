@@ -4,7 +4,7 @@
   1. vocoder_w8a16            (--compute_unit npu | latent: 1 x 144 x 100 float32) -> SUCCESS
   2. duration_predictor_w8a16 (--compute_unit cpu | text_ids: 1 x 64 int64, style_dp: 1 x 8 x 16 float32, text_mask: 1 x 1 x 64 float32) -> SUCCESS
   3. text_encoder_w8a16       (--compute_unit cpu | text_ids: 1 x 64 int64, style_ttl: 1 x 50 x 256 float32, text_mask: 1 x 1 x 64 float32) -> SUCCESS
-  4. vector_estimator_w8a16   (--compute_unit cpu | noisy_latent: 1 x 144 x 64 float32, text_emb: 1 x 256 x 64 float32, style_ttl: 1 x 50 x 256 float32, latent_mask: 1 x 1 x 64 float32, text_mask: 1 x 1 x 64 float32, current_step: 1 float32, total_step: 1 float32) -> SUCCESS
+  4. vector_estimator_w8a16   (--compute_unit cpu | noisy_latent: 1 x 144 x 100 float32, text_emb: 1 x 256 x 100 float32, style_ttl: 1 x 50 x 256 float32, latent_mask: 1 x 1 x 100 float32, text_mask: 1 x 1 x 100 float32, current_step: 1 float32, total_step: 1 float32) -> SUCCESS
 
 Target Device: Samsung Galaxy S24 Ultra (Snapdragon 8 Gen 3)
 """
@@ -28,8 +28,7 @@ def main():
     inf_voc = hub.submit_inference_job(
         model=model_voc,
         inputs=dict(latent=[latent_100]),
-        device=device,
-        options="--compute_unit npu"
+        device=device
     )
     inf_voc.set_name("[OFFICIAL_WIN] Supertonic3_vocoder_w8a16")
     print(f"   --> Inference Job ID: {inf_voc.job_id}")
@@ -67,20 +66,21 @@ def main():
     # 4. Vector Estimator W8A16 (CPU Host)
     job_ve = hub.get_job("jp4369wv5")
     model_ve = job_ve.get_target_model()
-    noisy_latent_64 = np.random.randn(1, 144, 64).astype(np.float32)
-    text_emb_64 = np.random.randn(1, 256, 64).astype(np.float32)
-    latent_mask_64 = np.ones((1, 1, 64), dtype=np.float32)
+    noisy_latent_100 = np.random.randn(1, 144, 100).astype(np.float32)
+    text_emb_100 = np.random.randn(1, 256, 100).astype(np.float32)
+    latent_mask_100 = np.ones((1, 1, 100), dtype=np.float32)
+    text_mask_100 = np.ones((1, 1, 100), dtype=np.float32)
     current_step_data = np.array([0.5], dtype=np.float32)
     total_step_data = np.array([5.0], dtype=np.float32)
     print(" • [4/4] Submitting INFERENCE for [vector_estimator_w8a16]...")
     inf_ve = hub.submit_inference_job(
         model=model_ve,
         inputs=dict(
-            noisy_latent=[noisy_latent_64],
-            text_emb=[text_emb_64],
+            noisy_latent=[noisy_latent_100],
+            text_emb=[text_emb_100],
             style_ttl=[style_ttl_50_256],
-            latent_mask=[latent_mask_64],
-            text_mask=[text_mask_64],
+            latent_mask=[latent_mask_100],
+            text_mask=[text_mask_100],
             current_step=[current_step_data],
             total_step=[total_step_data]
         ),
