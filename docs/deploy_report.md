@@ -95,7 +95,49 @@ Kết quả đo đạc thực tế trên chip **Qualcomm Snapdragon 8 Gen 3 (`Sa
 
 ---
 
-## 🏆 5. Kết Luận & Khuyến Nghị Sản Xuất
+## 🛠️ 5. Nhật Ký Các Lỗi Phát Sinh & Thao Tác Chỉnh Sửa Kỹ Thuật (Troubleshooting Log)
+
+Trong quá trình nộp và kiểm thử mô hình trên hệ thống **Qualcomm AI Hub Workbench**, các sự cố kỹ thuật đã được phát hiện, phân tích nguyên nhân gốc (Root Cause) và xử lý triệt để như sau:
+
+### Lỗi 1: `Failed to finalize QNN graph. Error code: 1002 at qnn_model.cc:382 FinalizeGraphs`
+* **Triệu chứng**: Nộp file QDQ ONNX thô của `text_encoder`, `duration_predictor`, `vector_estimator` lên tab `PROFILE` bị báo lỗi đỏ `FinalizeGraphs 1002`.
+* **Nguyên nhân kỹ thuật**:
+  * Các sub-model này chứa các lớp **Gather / Embedding Lookup** (tra bảng chỉ mục ký tự/âm vị Unicode). Phần cứng chip Qualcomm Hexagon NPU HTP chỉ hỗ trợ nhân ma trận/cuộn liên tục, **không hỗ trợ tra bảng chỉ mục bộ nhớ trên tensor nén W8A16**.
+* **Thao tác chỉnh sửa & Khắc phục**:
+  * Chuyển sang kiến trúc **Hybrid Execution Architecture**: Đẩy $100\%$ `vocoder` sang Hexagon NPU (`--compute_unit npu`), và chỉ định 3 submodel tra bảng âm vị chạy trên CPU Host (`--compute_unit cpu`).
+  * File script thực thi: [`src/step3_tts/utils/profile_hybrid_w8a16.py`](file:///Users/khoa/study/Onevoice_AI_VNG/src/step3_tts/utils/profile_hybrid_w8a16.py).
+  * Kết quả: Loại bỏ $100\%$ lỗi `FinalizeGraphs 1002`, cả 4 submodel đều đạt trạng thái **`Results Ready` (Xanh 100%)**.
+
+### Lỗi 2: `Must use --truncate_64bit_io when input tensors have type int64`
+* **Triệu chứng**: Biên dịch mô hình báo lỗi không tương thích định dạng kiểu dữ liệu đầu vào.
+* **Nguyên nhân kỹ thuật**: Phần cứng Qualcomm Hexagon NPU vận hành nguyên bản ở số nguyên 32-bit (`int32`), trong khi PyTorch/ONNX xuất ra 64-bit integer (`int64`).
+* **Thao tác chỉnh sửa & Khắc phục**:
+  * Thêm cờ `--truncate_64bit_io` trong hàm `hub.submit_compile_job(..., options="--target_runtime qnn_context_binary --truncate_64bit_io")` để trình biên dịch tự động nén 64-bit về 32-bit cho NPU.
+
+### Lỗi 3: `QuantizeLinear layer cannot have output dtype 'uint16' when targeting TF-Lite`
+* **Triệu chứng**: Trình biên dịch mặc định TF-Lite từ chối nạp mô hình W8A16 AIMET.
+* **Nguyên nhân kỹ thuật**: TFLite Runtime chuẩn không hỗ trợ 16-bit activation quantization (`uint16`).
+* **Thao tác chỉnh sửa & Khắc phục**:
+  * Đổi Target Runtime sang QNN Context Binary (`--target_runtime qnn_context_binary`) hoặc ONNXRuntime QNN Execution Provider (`--target_runtime onnx`).
+
+### Lỗi 4: Lệch Tên & Kích Thước Tensor Đầu Vào Trên Tab `INFERENCE`
+* **Triệu chứng**:
+  * `Expected (1, 64) for data input shape but got (1, 100)` cho `text_ids`.
+  * `Expected (1, 8, 16) for data input shape but got (1, 50, 256)` cho `style_dp`.
+  * `Expected 'style_dp' for data input name but got 'style_ttl'`.
+  * `Expected int64 for data input dtype but got int32`.
+* **Nguyên nhân kỹ thuật**: Các submodel nén W8A16 được chốt cứng kích thước tensor tĩnh (Static Tensor Bindings) để tối ưu AOT (Ahead-Of-Time Execution Plan).
+* **Thao tác chỉnh sửa & Khắc phục**:
+  * Cập nhật chuẩn xác $100\%$ danh sách tên, định dạng dtype và kích thước tensor đầu vào trong [`src/step3_tts/utils/run_aihub_inference.py`](file:///Users/khoa/study/Onevoice_AI_VNG/src/step3_tts/utils/run_aihub_inference.py):
+    * `vocoder`: `latent` `(1, 144, 100)` float32.
+    * `duration_predictor`: `text_ids` `(1, 64)` int64, `style_dp` `(1, 8, 16)` float32, `text_mask` `(1, 1, 64)` float32.
+    * `text_encoder`: `text_ids` `(1, 64)` int64, `style_ttl` `(1, 50, 256)` float32, `text_mask` `(1, 1, 64)` float32.
+    * `vector_estimator`: 7 inputs `noisy_latent` `(1, 144, 100)`, `text_emb` `(1, 256, 100)`, `style_ttl` `(1, 50, 256)`, `latent_mask` `(1, 1, 100)`, `text_mask` `(1, 1, 100)`, `current_step` `(1,)`, `total_step` `(1,)`.
+  * Kết quả: Toàn bộ các Job trên tab `INFERENCE` chuyển sang mốc tích xanh **`Results Ready` (Xanh 100%)**.
+
+---
+
+## 🏆 6. Kết Luận & Khuyến Nghị Sản Xuất
 
 1. **Hiệu Quả Triển Khai**: Hệ thống Supertonic 3 W8A16 đã triển khai thành công $100\%$ trên phần cứng Qualcomm Snapdragon, giảm $50.9\%$ dung lượng mô hình và đạt độ trễ khởi tạo tạo tiếng **TTFB < 38 ms** trên NPU.
 2. **Sẵn Sàng Sản Xuất**: Mã nguồn và 4 gói nhị phân `.bin` tại [`outputs/qnn_binaries_w8a16/`](file:///Users/khoa/study/Onevoice_AI_VNG/outputs/qnn_binaries_w8a16/) đã sẵn sàng nạp trực tiếp vào các ứng dụng Edge AI thương mại trong cuộc thi OneVoice AI Challenge.
