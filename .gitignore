@@ -17,3 +17,10 @@ third_party_zipformer/
 .venv/
 .DS_Store
 token-optimizer/
+*.log
+*_logs.txt/
+*_err*.txt/
+*_log.txt/
+*_prof_log.txt/
+job_logs.txt/
+vec_est_inf_err.txt/
