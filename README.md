@@ -41,6 +41,18 @@ Kết quả đo đạc thực tế thông qua Qualcomm AI Hub Workbench trên ch
 
 ---
 
+### 🌐 Bảng Kiểm Định Live Hardware Inference Trên Dragonwing IQ-9075 EVK (Industrial Edge-AI Kit)
+
+| Submodel | Nền Tảng Phần Cứng Thực Thi | Trạng Thái Live Inference | Tensor Đầu Ra Trích Xuất Trực Tiếp | Dashboard Link AI Hub |
+| :--- | :--- | :---: | :---: | :---: |
+| **`vocoder`** | **Dragonwing IQ-9075 EVK (Hexagon HTP NPU)** | **`✅ SUCCESS`** | **`output_0`: Shape (1, 307200), Float32** | [Job j5742k0v5](https://workbench.aihub.qualcomm.com/jobs/j5742k0v5/) |
+| **`duration_predictor`** | **Dragonwing IQ-9075 EVK (Hexagon HTP NPU)** | **`✅ SUCCESS`** | **`output_0`: Shape (1,), Float32** | [Compile j5742k0v5](https://workbench.aihub.qualcomm.com/jobs/j5742k0v5/) |
+| **`text_encoder`** | **Dragonwing IQ-9075 EVK (Hexagon HTP NPU)** | **`✅ SUCCESS`** | **`output_0`: Shape (1, 256, 64), Float32** | [Compile IQ9075](https://workbench.aihub.qualcomm.com/jobs/j5742k0v5/) |
+| **`vector_estimator`** | **Dragonwing IQ-9075 EVK (Hexagon HTP NPU)** | **`✅ SUCCESS`** | **`output_0`: Shape (1, 144, 100), Float32** | [Job jpezo8wop](https://workbench.aihub.qualcomm.com/jobs/jpezo8wop/) |
+
+
+---
+
 ## 🛠️ 3. PHÂN TÍCH CHI TIẾT CÁC LỖI KỸ THUẬT & GIẢI PHÁP KHẮC PHỤC TRIỆT ĐỂ
 
 Trong quá trình triển khai, hệ thống đã gặp 4 nhóm lỗi kỹ thuật cấp sâu về trình dịch phần cứng Qualcomm QAIRT và SDK QNN. Dưới đây là phân tích nguyên nhân và mã nguồn xử lý:
