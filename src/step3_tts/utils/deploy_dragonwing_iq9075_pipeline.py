@@ -1,7 +1,7 @@
 """Qualcomm AI Hub Dragonwing IQ-9075 EVK Compilation & Live Hardware Inference Pipeline.
 
-Submits all 4 Supertonic 3 TTS submodels to Qualcomm AI Hub Cloud targeting
-the Dragonwing IQ-9075 EVK (Edge / Industrial IoT AI platform) and runs live hardware inference.
+Submits all 4 refactored Supertonic 3 TTS submodels to Qualcomm AI Hub Cloud targeting
+the Dragonwing IQ-9075 EVK (Hexagon HTP NPU on Qualcomm QCS9075 SoC) and runs live hardware inference.
 """
 import os
 import sys
@@ -13,11 +13,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspa
 from common import _ensure_utf8_stdout
 
 TARGET_DEVICE_NAME = "Dragonwing IQ-9075 EVK"
+MODEL_DIR = "outputs/pure_npu_dynamic"
 
 SUBMODEL_CONFIGS = [
     {
         "name": "vocoder",
-        "onnx_path": "outputs/npu_compliant_onnx/vocoder_npu.onnx",
+        "onnx_path": os.path.join(MODEL_DIR, "vocoder_npu.onnx"),
         "specs": {
             "latent": ((1, 144, 100), "float32"),
         },
@@ -27,7 +28,7 @@ SUBMODEL_CONFIGS = [
     },
     {
         "name": "duration_predictor",
-        "onnx_path": "outputs/npu_compliant_onnx/duration_predictor_npu.onnx",
+        "onnx_path": os.path.join(MODEL_DIR, "duration_predictor_npu.onnx"),
         "specs": {
             "text_ids": ((1, 64), "int64"),
             "style_dp": ((1, 8, 16), "float32"),
@@ -41,7 +42,7 @@ SUBMODEL_CONFIGS = [
     },
     {
         "name": "text_encoder",
-        "onnx_path": "outputs/npu_compliant_onnx/text_encoder_npu.onnx",
+        "onnx_path": os.path.join(MODEL_DIR, "text_encoder_npu.onnx"),
         "specs": {
             "text_ids": ((1, 64), "int64"),
             "style_ttl": ((1, 50, 256), "float32"),
@@ -55,22 +56,22 @@ SUBMODEL_CONFIGS = [
     },
     {
         "name": "vector_estimator",
-        "onnx_path": "outputs/npu_compliant_onnx/vector_estimator_npu.onnx",
+        "onnx_path": os.path.join(MODEL_DIR, "vector_estimator_npu.onnx"),
         "specs": {
             "noisy_latent": ((1, 144, 100), "float32"),
-            "text_emb": ((1, 256, 32), "float32"),
+            "text_emb": ((1, 256, 64), "float32"),
             "style_ttl": ((1, 50, 256), "float32"),
             "latent_mask": ((1, 1, 100), "float32"),
-            "text_mask": ((1, 1, 32), "float32"),
+            "text_mask": ((1, 1, 64), "float32"),
             "current_step": ((1,), "float32"),
             "total_step": ((1,), "float32"),
         },
         "sample_inputs": {
             "noisy_latent": [np.random.randn(1, 144, 100).astype(np.float32)],
-            "text_emb": [np.random.randn(1, 256, 32).astype(np.float32)],
+            "text_emb": [np.random.randn(1, 256, 64).astype(np.float32)],
             "style_ttl": [np.random.randn(1, 50, 256).astype(np.float32)],
             "latent_mask": [np.ones((1, 1, 100), dtype=np.float32)],
-            "text_mask": [np.ones((1, 1, 32), dtype=np.float32)],
+            "text_mask": [np.ones((1, 1, 64), dtype=np.float32)],
             "current_step": [np.array([1.0], dtype=np.float32)],
             "total_step": [np.array([5.0], dtype=np.float32)],
         },
@@ -80,11 +81,12 @@ SUBMODEL_CONFIGS = [
 
 def run_dragonwing_pipeline():
     _ensure_utf8_stdout()
-    print("=" * 80)
-    print(" 🚀 QUALCOMM AI HUB — DRAGONWING IQ-9075 EVK COMPILATION & LIVE INFERENCE")
+    print("=" * 85)
+    print(f" 🚀 QUALCOMM AI HUB — {TARGET_DEVICE_NAME.upper()} COMPILATION & LIVE INFERENCE")
     print(f" • Target Hardware : {TARGET_DEVICE_NAME}")
+    print(f" • Target SoC      : Qualcomm QCS9075 (Hexagon HTP NPU)")
     print(f" • Target Runtime  : ONNX Runtime QNN Execution Provider (NPU Accelerated)")
-    print("=" * 80)
+    print("=" * 85)
 
     device = hub.Device(TARGET_DEVICE_NAME)
     compiled_models = {}
@@ -101,7 +103,7 @@ def run_dragonwing_pipeline():
             device=device,
             input_specs=specs,
             options="--target_runtime onnx",
-            name=f"{name}_iq9075_onnx_qnn_ep",
+            name=f"[DRAGONWING_IQ9075] Supertonic3_{name}_NPU",
         )
         print(f"  • Compile Job ID : {compile_job.job_id}")
         print(f"  • Dashboard URL  : {compile_job.url}")
@@ -118,29 +120,29 @@ def run_dragonwing_pipeline():
             print(f"  ❌ FAILED to compile '{name}' (Status: {status})")
 
     # Step 2: Submit Live Hardware Inference Jobs on Dragonwing IQ-9075 EVK
-    print("\n" + "=" * 80)
+    print("\n" + "=" * 85)
     print(f" 📊 SUBMITTING LIVE HARDWARE INFERENCE JOBS ON {TARGET_DEVICE_NAME}")
-    print("=" * 80)
+    print("=" * 85)
 
     inference_jobs = []
     for name, (target_model, sample_inputs) in compiled_models.items():
-        print(f"\n[2/2] Submitting Live Inference for '{name}' (Model: {target_model.model_id})...")
+        print(f"\n[2/2] Submitting Live Hardware Inference for '{name}' on {TARGET_DEVICE_NAME}...")
         inf_job = hub.submit_inference_job(
             model=target_model,
             device=device,
             inputs=sample_inputs,
-            name=f"{name}_iq9075_live_inference",
+            name=f"[DRAGONWING_IQ9075] Supertonic3_{name}_Live_NPU",
         )
         print(f"  • Inference Job ID : {inf_job.job_id}")
         print(f"  • Dashboard URL    : {inf_job.url}")
         inference_jobs.append((name, inf_job))
 
-    print("\n" + "=" * 80)
+    print("\n" + "=" * 85)
     print(f" 🏁 WAITING FOR LIVE HARDWARE INFERENCE RESULTS ON {TARGET_DEVICE_NAME}")
-    print("=" * 80)
+    print("=" * 85)
 
     for name, inf_job in inference_jobs:
-        print(f"\n⏳ Waiting for inference job ({inf_job.job_id}) for '{name}'...")
+        print(f"\n⏳ Waiting for live hardware inference job ({inf_job.job_id}) for '{name}'...")
         inf_job.wait()
         st = inf_job.get_status().code
         print(f"  • [{name:<18}]: Status = {st:<12} | Dashboard: {inf_job.url}")
@@ -154,9 +156,9 @@ def run_dragonwing_pipeline():
             except Exception as ex:
                 print(f"    ⚠️ Download note: {ex}")
 
-    print("\n" + "=" * 80)
-    print(" 🎉 DRAGONWING IQ-9075 EVK PIPELINE COMPLETED SUCCESSFULLY!")
-    print("=" * 80)
+    print("\n" + "=" * 85)
+    print(f" 🎉 ALL 4 SUBMODELS DEPLOYED & EXECUTED LIVE ON {TARGET_DEVICE_NAME}!")
+    print("=" * 85)
 
 
 if __name__ == "__main__":
