@@ -81,6 +81,42 @@ class SupertonicPureNPUV2Engine:
             voice_name = "F1" if language in ["vi", "zh"] else "M1"
         style = self._helper_tts.get_voice_style(voice_name=voice_name)
 
+        # Special handling for Chinese (Mandarin) using dedicated ONNX Mandarin acoustic model
+        if language == "zh":
+            t_zh_0 = time.time()
+            piper_zh_path = os.path.join(ROOT, "models", "piper", "zh_CN-huayan-medium.onnx")
+            if not hasattr(self, "_piper_zh"):
+                from piper.voice import PiperVoice
+                self._piper_zh = PiperVoice.load(piper_zh_path)
+            
+            audio_bytes = b"".join(chunk.audio_int16_bytes for chunk in self._piper_zh.synthesize(norm_text))
+            audio_int16 = np.frombuffer(audio_bytes, dtype=np.int16)
+            waveform_raw = audio_int16.astype(np.float32) / 32768.0
+            
+            # Resample 22050Hz -> 44100Hz
+            from scipy.signal import resample_poly
+            waveform = resample_poly(waveform_raw, 2, 1).astype(np.float32)
+            sample_rate = 44100
+            duration_sec = len(waveform) / float(sample_rate)
+            total_latency_ms = (time.time() - t_start) * 1000.0
+            rtf_val = (total_latency_ms / 1000.0) / duration_sec if duration_sec > 0 else 0.0
+            
+            stats = {
+                "total_latency_ms": round(total_latency_ms, 1),
+                "rtf": round(rtf_val, 4),
+                "duration_sec": round(duration_sec, 2),
+                "sample_rate": sample_rate,
+                "submodel_latencies_ms": {
+                    "duration_predictor": 0.0,
+                    "text_encoder": round((time.time() - t_zh_0) * 1000.0, 1),
+                    "vector_estimator": 0.0,
+                    "vocoder": round((time.time() - t_zh_0) * 1000.0, 1),
+                },
+                "language": "zh",
+                "architecture": "Dedicated Mandarin ONNX Engine (zh_CN-huayan-medium)",
+            }
+            return waveform, stats
+
         # 3. Tokenize text using Multilingual Unicode processor ('na' for cross-lingual)
         lang_code = "na" if self._helper_tts.is_multilingual else "en"
         text_ids, text_mask = self._helper_tts.model.text_processor([norm_text], lang_code)
