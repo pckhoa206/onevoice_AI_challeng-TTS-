@@ -207,46 +207,95 @@ Công cụ `src/step3_tts/utils/refactor_pure_npu_v2.py` đã tự động xử 
 
 ---
 
-## 📁 6. CẤU TRÚC THƯ MỤC DỰ ÁN CHUẨN HÓA
+## 📁 6. CẤU TRÚC THƯ MỤC DỰ ÁN & PHÂN TÍCH CHUYÊN SÂU MÃ NGUỒN CỐT LÕI
 
-Toàn bộ kho lưu trữ đã được tinh giản, dọn sạch bộ nhớ đệm tạm thời và bảo toàn nguyên vẹn 100% tệp nhị phân đã kiểm định:
+Toàn bộ kho lưu trữ đã được tinh giản, bảo đảm đầy đủ mã nguồn cốt lõi, công cụ tái cấu trúc đồ thị và hệ thống báo cáo kỹ thuật hoàn chỉnh:
 
 ```text
 Onevoice_AI_VNG/
 ├── docs/                                      # Hệ thống tài liệu báo cáo kỹ thuật chính thức
 │   ├── 01_technical_proposal_and_evidence.md  # Đề án kỹ thuật & Căn cứ số liệu
 │   ├── 02_hexagon_npu_deployment_report.md    # Báo cáo triển khai Hexagon NPU & Graph Refactoring
-│   ├── 03_supertonic_tts_benchmark_report.md  # Báo cáo thực nghiệm benchmark 150 câu thoại
+│   ├── 03_supertonic_tts_benchmark_report.md  # Báo cáo thực nghiệm benchmark 150 câu thoại (WER/CER/LSD)
+│   ├── 04_full_npu_deployment_and_tradeoff_report.md # Chiến lược Full NPU & Phân tích 4 đánh đổi kỹ thuật
 │   └── report_cpu.md                          # Báo cáo kỹ thuật tỷ trọng CPU & Ranh giới phần cứng
-├── outputs/                                   # Tệp mô hình và nhị phân thành phẩm
-│   ├── pure_npu_binaries_w8a16/
-│   │   └── vocoder_pure_npu_w8a16.bin         # (25.5 MB) QNN Context Binary thuần Hexagon NPU
-│   ├── pure_npu_compliant_onnx_v2/            # Bộ mô hình ONNX W8A16 Static đã Graph Refactored
-│   │   ├── duration_predictor_pure_npu.onnx   # (1.6 MB) Static ONNX NPU
-│   │   ├── text_encoder_pure_npu.onnx         # (27 MB) Static ONNX NPU
-│   │   ├── vector_estimator_pure_npu.onnx     # (245 MB) Static ONNX NPU
-│   │   ├── vector_estimator_unrolled_5step_pure_npu.onnx # (247 MB) 1-Shot 5-Step Unrolled Graph
-│   │   └── vocoder_pure_npu.onnx              # (97 MB) Static ONNX NPU
-│   ├── pure_npu_dynamic/                      # Bộ mô hình ONNX NPU hỗ trợ Dynamic Shapes
-│   ├── qnn_binaries_w8a16/                    # Gói lưu trữ 4 submodel QNN W8A16
-│   └── qnn_binaries/                          # Gói lưu trữ 4 submodel QNN FP16
+├── data/                                      # Dữ liệu phục vụ kiểm thử và benchmark
+│   └── benchmarks/
+│       └── benchmark_manifest.json            # 150 câu kiểm thử học thuật chuẩn hóa (LJSpeech, KSS, VIVOS)
 ├── src/                                       # Mã nguồn điều phối và kiểm thử
-│   ├── common.py                              # Tiện ích môi trường chung
-│   └── step3_tts/                             # Module Text-to-Speech trọng tâm
-│       ├── supertonic_pure_npu_v2_engine.py   # Engine TTS thuần NPU V2 (English/Korean/Vi)
+│   ├── common.py                              # Tiện ích môi trường chung (load_wav, rtf, normalize_text)
+│   └── step3_tts/                             # MODULE TEXT-TO-SPEECH THUẦN NPU (CORE)
+│       ├── supertonic_pure_npu_v2_engine.py   # ⭐ Engine TTS thuần 100% NPU V2 (0.0% CPU Fallback)
+│       ├── tts_manager.py                     # ⭐ Bộ điều phối UnifiedTTSManager toàn diện
 │       ├── text_normalizer.py                 # Chuẩn hóa văn bản CPU Host (< 0.35 ms)
-│       ├── prosody_enhancer.py                # Phân tích ngữ điệu CPU Host (< 0.20 ms)
-│       ├── style_prompt_manager.py            # Quản lý vector phong cách giọng đọc
-│       ├── run_expanded_w8a16_benchmark.py    # Benchmark tự động 150 câu thoại
-│       ├── tests/
-│       │   └── test_pure_npu_verification.py  # Script kiểm thử độ chính xác số học Cosine Sim
-│       └── utils/
-│           ├── refactor_pure_npu_v2.py        # Pipeline tái cấu trúc đồ thị ONNX
-│           ├── build_unrolled_ve.py           # Bộ xây dựng đồ thị Unrolled 5-Step ODE
-│           └── deploy_dragonwing_iq9075_pipeline.py # Script submit kiểm thử AI Hub
-├── token-optimizer/                           # Module tối ưu hóa token âm thanh
+│       ├── prosody_enhancer.py                # Phân rã nhịp điệu & ngắt nghỉ vi mô (< 0.20 ms)
+│       ├── style_prompt_manager.py            # Quản lý vector cảm xúc & cache nội suy (0% CPU)
+│       ├── warmup_worker.py                   # Luồng nền làm ấm Session và bộ nhớ đệm
+│       ├── supertonic_w8a16_engine.py         # Engine W8A16 phục vụ kiểm định cục bộ
+│       ├── run_expanded_w8a16_benchmark.py    # Benchmark tự động 150 câu kèm Round-Trip ASR
+│       ├── verify_w8a16_cosine.py             # Đo kiểm Cosine Similarity = 1.000000
+│       ├── README.md                          # Hướng dẫn chuyên sâu cho Step 3 TTS
+│       │
+│       ├── tests/                             # Bộ kiểm thử tự động xác minh tính toàn vẹn
+│       │   ├── test_pure_npu_verification.py  # So sánh tensor đầu ra NPU vs FP32 gốc
+│       │   ├── test_pure_npu_v2_accuracy.py   # Kiểm định độ chính xác nơ-ron V2
+│       │   ├── test_in_graph_mask_accuracy.py # Kiểm tra độ chính xác của In-Graph Masks
+│       │   ├── test_onehot_gemm_accuracy.py   # Kiểm tra chuyển đổi One-Hot GEMM
+│       │   ├── test_static_noise_quality.py   # Kiểm tra chất lượng sóng âm khi dùng Static Noise
+│       │   └── test_long_multilingual.py      # Kiểm thử tổng hợp các câu thoại dài đa ngữ
+│       │
+│       └── utils/                             # BỘ CÔNG CỤ TÁI CẤU TRÚC ĐỒ THỊ & LIVE AI HUB
+│           ├── refactor_pure_npu_v2.py        # ⭐ Phẫu thuật đồ thị: ZeroBias Conv/MatMul, Shape Inference
+│           ├── build_unrolled_ve.py           # ⭐ Unroll 5 bước Flow ODE thành 1 đồ thị ONNX 1-shot
+│           ├── fuse_duration_speed.py         # Fuse tham số tốc độ nói trực tiếp vào đồ thị DP
+│           ├── fuse_mask_generator.py         # Fuse bộ sinh mask trực tiếp vào đồ thị ONNX
+│           ├── fuse_static_noise.py           # Fuse tensor nhiễu tĩnh vào Vector Estimator
+│           ├── fuse_vocoder_16k.py            # Fuse lớp Conv hạ tần số mẫu 16 kHz vào Vocoder
+│           ├── fuse_vocoder_pcm.py            # Fuse bộ lượng hóa Int16 PCM trực tiếp vào Vocoder
+│           ├── refactor_gather_to_onehot.py   # Thay thế nút Gather động bằng OneHot + GEMM tĩnh
+│           ├── deploy_dragonwing_iq9075_pipeline.py # Script submit tự động lên Qualcomm AI Hub
+│           ├── deploy_all_4_submodels_live_aihub.py # Pipeline submit và đo đạc cả 4 submodels
+│           ├── deploy_full_verification_aihub.py    # Kiểm định toàn diện live hardware
+│           └── run_full_hardware_pipeline.py  # Pipeline xác minh toàn bộ 4 submodels trên phần cứng
+├── requirements.txt                           # Thư viện môi trường (torch, onnxruntime, qai-hub, v.v.)
 └── README.md                                  # Hướng dẫn tổng quan và hướng dẫn vận hành
 ```
+
+---
+
+### 🔍 6.1. ĐI SÂU VÀO MÃ NGUỒN CỐT LÕI (DEEP-DIVE CODE EXPLANATION)
+
+#### A. `SupertonicPureNPUV2Engine` (`src/step3_tts/supertonic_pure_npu_v2_engine.py`)
+Là trung tâm điều phối suy luận NPU của Supertonic 3, giải quyết dứt điểm hiện tượng CPU Fallback:
+1. **Khởi tạo động theo cấu hình phần cứng**:
+   - `use_unrolled_ve`: Kiểm tra sự tồn tại của `vector_estimator_unrolled_5step_pure_npu.onnx`. Khi kích hoạt, thay vì lặp 5 lần gọi NPU qua CPU bus, hệ thống chỉ kích hoạt 1 lần gọi NPU duy nhất, giảm 5 lần độ trễ DMA overhead.
+   - `use_pcm16_vocoder`: Nhận diện Vocoder đã fuse tầng PCM16. Dữ liệu đầu ra là chuỗi byte `int16` nguyên bản, sẵn sàng đưa thẳng vào sound card/loa mà không cần bước `np.clip` hay `astype` trên CPU.
+   - `use_speed_aware_dp`: Sử dụng Duration Predictor đã nạp sẵn nút `Div` an toàn trong đồ thị ONNX.
+2. **Quy trình tổng hợp `synthesize()`**:
+   - Giai đoạn CPU Host (`< 1.25 ms`): Chuẩn hóa văn bản (`TextNormalizer`), phân tách dấu câu (`ProsodyEnhancer`), tra bảng token và lấy vector cảm xúc từ `StylePromptManager`.
+   - Giai đoạn NPU (`100% On-Chip`):
+     * `duration_predictor`: Dự đoán độ dài âm tiết (1.1 - 1.5 ms).
+     * `text_encoder`: Mã hóa ngữ âm và vector cảm xúc (3.5 - 6.9 ms).
+     * `vector_estimator`: Giải phương trình vi phân Flow ODE 5 bước trong 1 đồ thị duy nhất (125.8 ms trên Dragonwing IQ-9075).
+     * `vocoder`: Nạp trực tiếp trong HTP NPU SRAM, giải mã sóng âm trong **`7.397 ms`** (RTF < 0.0016).
+
+#### B. `build_unrolled_ve.py` (`src/step3_tts/utils/build_unrolled_ve.py`)
+Thuật toán unroll đồ thị Flow ODE 5 bước:
+- **Tái sử dụng trọng số chia sẻ (Shared Initializers)**: Khắc phục nhược điểm phình to kích thước đồ thị. Các nút tính toán ở cả 5 bước $t=0, 1, 2, 3, 4$ đều tham chiếu đến cùng tên trọng số trong `graph.initializer`, giữ kích thước tệp ONNX ở mức **247 MB** thay vì > 1.2 GB.
+- **Ping-Pong Buffer Recycling**: Nối đầu ra $x_{k+1}$ của bước trước làm đầu vào $x_k$ của bước sau, giúp trình biên dịch QNN tái sử dụng bộ nhớ đệm SRAM trên chip Hexagon NPU.
+- **Multi-Output Tapping (`--debug`)**: Cung cấp chế độ xuất các latent trung gian $x_1, x_2, x_3, x_4$ để kiểm tra độ hội tụ thuật toán.
+
+#### C. `refactor_pure_npu_v2.py` (`src/step3_tts/utils/refactor_pure_npu_v2.py`)
+Bộ công cụ phẫu thuật đồ thị vượt qua các giới hạn của trình biên dịch Qualcomm QAIRT:
+- `fix_conv_missing_bias`: Tự động chèn tensor Bias $\vec{0.0}$ làm đầu vào thứ 3 cho các lớp Conv thiếu bias, khắc phục lỗi `preprocessPerChannel: No bias info for op`.
+- `fix_matmul_add_zero_bias`: Chèn `Add(ZeroBias)` sau các ma trận Attention $W_q, W_k, W_v, W_{\text{out}}$, giúp QNN nhận diện đúng mẫu tính toán phần cứng.
+- `infer_shapes`: Suy luận metadata kích thước và kiểu dữ liệu cho toàn bộ các tensor trung gian.
+
+#### D. Bộ Công Cụ In-Graph Operator Fusion (`src/step3_tts/utils/fuse_*.py`)
+- `fuse_duration_speed.py`: Tích hợp phép chia tốc độ `speed` vào đồ thị Duration Predictor.
+- `fuse_mask_generator.py`: Tự động tạo mặt nạ nhị phân bên trong NPU bằng các phép so sánh tensor.
+- `fuse_static_noise.py`: Nhúng tensor nhiễu chuẩn $\mathcal{N}(0, I)$ cố định vào đồ thị, loại bỏ việc sinh số ngẫu nhiên từ CPU Host.
+- `fuse_vocoder_16k.py` & `fuse_vocoder_pcm.py`: Tích hợp bộ lọc lấy mẫu 16 kHz và lượng hóa Int16 PCM trực tiếp vào Vocoder.
 
 ---
 
