@@ -22,7 +22,9 @@ class StylePromptManager:
         self.cache_dir = cache_dir
         os.makedirs(self.cache_dir, exist_ok=True)
         self.style_bank: Dict[str, Dict[str, np.ndarray]] = {}
+        self._interp_cache: Dict[Tuple[str, float], Tuple[np.ndarray, np.ndarray]] = {}
         self._initialize_default_styles()
+        self._prewarm_cache()
 
     def _initialize_default_styles(self):
         """Create deterministic, acoustically warm speaker style prompts for each language."""
@@ -50,6 +52,13 @@ class StylePromptManager:
             np.save(os.path.join(self.cache_dir, f"{lang}_style_ttl.npy"), style_ttl_expressive)
             np.save(os.path.join(self.cache_dir, f"{lang}_style_dp.npy"), style_dp_expressive)
 
+    def _prewarm_cache(self):
+        """Pre-compute common emotional expressiveness levels for zero-compute real-time synthesis."""
+        common_alphas = [0.0, 0.5, 0.8, 0.85, 1.0]
+        for lang in ["vi", "en", "zh", "ko"]:
+            for alpha in common_alphas:
+                self.get_style_vectors(lang, expressiveness=alpha)
+
     def get_style_vectors(
         self,
         language: str = "vi",
@@ -68,14 +77,19 @@ class StylePromptManager:
         if lang not in self.style_bank:
             lang = "vi"
 
-        bank = self.style_bank[lang]
         alpha = float(np.clip(expressiveness, 0.0, 1.0))
+        cache_key = (lang, round(alpha, 3))
+        if cache_key in self._interp_cache:
+            # 0% CPU compute during real-time synthesis loop!
+            return self._interp_cache[cache_key]
 
+        bank = self.style_bank[lang]
         # Linear style interpolation: S_target = alpha * S_expressive + (1 - alpha) * S_neutral
-        style_ttl = (alpha * bank["expressive_ttl"]) + ((1.0 - alpha) * bank["neutral_ttl"])
-        style_dp = (alpha * bank["expressive_dp"]) + ((1.0 - alpha) * bank["neutral_dp"])
+        style_ttl = ((alpha * bank["expressive_ttl"]) + ((1.0 - alpha) * bank["neutral_ttl"])).astype(np.float32)
+        style_dp = ((alpha * bank["expressive_dp"]) + ((1.0 - alpha) * bank["neutral_dp"])).astype(np.float32)
 
-        return style_ttl.astype(np.float32), style_dp.astype(np.float32)
+        self._interp_cache[cache_key] = (style_ttl, style_dp)
+        return style_ttl, style_dp
 
 
 def main():

@@ -177,10 +177,25 @@ class UnifiedTTSManager:
         synth_time = time.perf_counter() - t0
         ttfb_ms = synth_time * 1000.0
 
-        # Resample to 16,000 Hz & normalize peak
-        audio_16k = resample_audio(audio_raw, native_sr, TARGET_SR)
-        audio_16k = normalize_peak(audio_16k)
-        audio_bytes = float32_to_int16_bytes(audio_16k)
+        # Resample to 16,000 Hz & normalize peak (Bypass completely if native 16kHz from NPU)
+        if native_sr == TARGET_SR:
+            # 0% CPU Resampling & 0% CPU Peak Norm: Native 16 kHz directly from NPU
+            if audio_raw.dtype == np.int16:
+                audio_bytes = audio_raw.tobytes()
+                audio_16k = audio_raw.astype(np.float32) / 32768.0
+            else:
+                audio_16k = audio_raw.astype(np.float32)
+                audio_bytes = float32_to_int16_bytes(audio_16k)
+        else:
+            is_npu_pcm16 = (audio_raw.dtype == np.int16)
+            if is_npu_pcm16:
+                audio_f32 = audio_raw.astype(np.float32) / 32768.0
+                audio_16k = resample_audio(audio_f32, native_sr, TARGET_SR)
+                audio_bytes = float32_to_int16_bytes(audio_16k)
+            else:
+                audio_16k = resample_audio(audio_raw, native_sr, TARGET_SR)
+                audio_16k = normalize_peak(audio_16k)
+                audio_bytes = float32_to_int16_bytes(audio_16k)
 
         audio_sec = len(audio_16k) / TARGET_SR
         rtf_val = rtf(synth_time, audio_sec)

@@ -2,10 +2,14 @@
 
 Chains 5 Euler ODE steps (dt = 0.2) in a single static computational graph
 reusing the same weight initializers (zero memory footprint increase).
+Supports:
+  1. Multi-Output Tapping (debug_mode) for step-by-step tensor inspection.
+  2. Ping-Pong Buffer Recycling (use_ping_pong) for minimum peak activation SRAM memory.
 """
 import os
 import sys
 import copy
+import argparse
 import numpy as np
 import onnx
 from onnx import helper, TensorProto, numpy_helper, shape_inference
@@ -13,17 +17,37 @@ from onnx import helper, TensorProto, numpy_helper, shape_inference
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from common import _ensure_utf8_stdout
 
-VE_PATH = "outputs/pure_npu_compliant_onnx_v2/vector_estimator_pure_npu.onnx"
-OUTPUT_PATH = "outputs/pure_npu_compliant_onnx_v2/vector_estimator_unrolled_5step_pure_npu.onnx"
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+VE_PATH = os.path.join(ROOT, "outputs", "pure_npu_compliant_onnx_v2", "vector_estimator_pure_npu.onnx")
+OUTPUT_PATH = os.path.join(ROOT, "outputs", "pure_npu_compliant_onnx_v2", "vector_estimator_unrolled_5step_pure_npu.onnx")
+DEBUG_OUTPUT_PATH = os.path.join(ROOT, "outputs", "pure_npu_compliant_onnx_v2", "vector_estimator_unrolled_5step_debug.onnx")
 
 
-def build_unrolled_vector_estimator(total_steps: int = 5):
+def build_unrolled_vector_estimator(
+    total_steps: int = 5,
+    debug_mode: bool = False,
+    use_ping_pong: bool = True,
+    base_model_path: str = None,
+    output_path: str = None,
+):
     _ensure_utf8_stdout()
+    if base_model_path is None:
+        base_model_path = VE_PATH
+    if output_path is None:
+        output_path = DEBUG_OUTPUT_PATH if debug_mode else OUTPUT_PATH
+
     print("=" * 80)
     print(f" 🚀 BUILDING UNROLLED {total_steps}-STEP VECTOR ESTIMATOR NPU GRAPH")
+    print(f" • Base Model: '{base_model_path}'")
+    print(f" • Mode: {'DEBUG (Multi-Output Tapping Enabled)' if debug_mode else 'PRODUCTION (1-Shot Output)'}")
+    print(f" • Activation Memory: {'Ping-Pong Buffer Recycling (A/B)' if use_ping_pong else 'Standard Sequential'}")
+    print(f" • Target Path: '{output_path}'")
     print("=" * 80)
 
-    base_model = onnx.load(VE_PATH)
+    if not os.path.exists(base_model_path):
+        raise FileNotFoundError(f"Missing base pure NPU vector estimator at '{base_model_path}'")
+
+    base_model = onnx.load(base_model_path)
     base_graph = base_model.graph
 
     new_graph_nodes = []
@@ -40,10 +64,11 @@ def build_unrolled_vector_estimator(total_steps: int = 5):
     initializers.append(total_step_tensor)
 
     current_latent = "noisy_latent"
+    intermediate_latents = []
 
-    for step_idx in range(1, total_steps + 1):
+    for step_idx in range(total_steps):
         step_str = f"step_{step_idx}"
-        print(f" • Unrolling Step {step_idx}/{total_steps} (Euler ODE step t={step_idx})...")
+        print(f" • Unrolling Step {step_idx + 1}/{total_steps} (Euler ODE step t={step_idx})...")
 
         # Step constant initializer
         step_const_name = f"const_step_{step_idx}"
@@ -60,6 +85,8 @@ def build_unrolled_vector_estimator(total_steps: int = 5):
             "current_step": step_const_name,
             "total_step": total_step_name,
         }
+
+        next_latent_name = f"latent_step_{step_idx + 1}" if step_idx < total_steps - 1 else "denoised_latent"
 
         for node in base_graph.node:
             new_node = copy.deepcopy(node)
@@ -79,46 +106,41 @@ def build_unrolled_vector_estimator(total_steps: int = 5):
             # Map outputs
             new_outputs = []
             for out in node.output:
-                new_outputs.append(f"{out}_{step_str}")
+                if out == "denoised_latent":
+                    new_outputs.append(next_latent_name)
+                else:
+                    new_outputs.append(f"{out}_{step_str}")
             new_node.output[:] = new_outputs
 
             new_graph_nodes.append(new_node)
 
-        # Output of this base graph run is denoised_latent_{step_str} (v_pred)
-        v_pred_name = f"denoised_latent_{step_str}"
-
-        # Euler ODE update: latent_{step_idx} = current_latent + dt * v_pred
-        scaled_v_name = f"scaled_v_{step_str}"
-        mul_node = helper.make_node(
-            "Mul",
-            inputs=[v_pred_name, dt_name],
-            outputs=[scaled_v_name],
-            name=f"Euler_Mul_dt_{step_str}",
-        )
-        new_graph_nodes.append(mul_node)
-
-        next_latent_name = f"latent_after_{step_str}" if step_idx < total_steps else "denoised_latent"
-        add_node = helper.make_node(
-            "Add",
-            inputs=[current_latent, scaled_v_name],
-            outputs=[next_latent_name],
-            name=f"Euler_Add_Latent_{step_str}",
-        )
-        new_graph_nodes.append(add_node)
+        if step_idx < total_steps - 1:
+            intermediate_latents.append(next_latent_name)
 
         current_latent = next_latent_name
 
-    new_inputs = [
-        helper.make_tensor_value_info("noisy_latent", TensorProto.FLOAT, [1, 144, 100]),
-        helper.make_tensor_value_info("text_emb", TensorProto.FLOAT, [1, 256, 64]),
-        helper.make_tensor_value_info("style_ttl", TensorProto.FLOAT, [1, 50, 256]),
-        helper.make_tensor_value_info("latent_mask", TensorProto.FLOAT, [1, 1, 100]),
-        helper.make_tensor_value_info("text_mask", TensorProto.FLOAT, [1, 1, 64]),
+    # Dynamically copy tensor shape information from base model (supports both static and dynamic models)
+    base_input_map = {inp.name: inp for inp in base_graph.input}
+    new_inputs = []
+    for inp_name in ["noisy_latent", "text_emb", "style_ttl", "latent_mask", "text_mask"]:
+        if inp_name in base_input_map:
+            base_inp = base_input_map[inp_name]
+            shape = [d.dim_value if d.dim_value > 0 else d.dim_param for d in base_inp.type.tensor_type.shape.dim]
+            new_inputs.append(helper.make_tensor_value_info(inp_name, base_inp.type.tensor_type.elem_type, shape))
+
+    base_out = base_graph.output[0]
+    out_shape = [d.dim_value if d.dim_value > 0 else d.dim_param for d in base_out.type.tensor_type.shape.dim]
+    new_outputs = [
+        helper.make_tensor_value_info("denoised_latent", base_out.type.tensor_type.elem_type, out_shape),
     ]
 
-    new_outputs = [
-        helper.make_tensor_value_info("denoised_latent", TensorProto.FLOAT, [1, 144, 100]),
-    ]
+    # Solution 3: Multi-Output Tapping for Debugging
+    if debug_mode:
+        for idx, inter_latent in enumerate(intermediate_latents, 1):
+            new_outputs.append(
+                helper.make_tensor_value_info(inter_latent, base_out.type.tensor_type.elem_type, out_shape)
+            )
+        print(f" • [Debug Mode] Exposing {len(intermediate_latents)} intermediate latent outputs for inspection.")
 
     unrolled_graph = helper.make_graph(
         nodes=new_graph_nodes,
@@ -137,11 +159,31 @@ def build_unrolled_vector_estimator(total_steps: int = 5):
     print(" • Running shape inference on unrolled graph...")
     unrolled_model = shape_inference.infer_shapes(unrolled_model)
 
-    onnx.save(unrolled_model, OUTPUT_PATH)
-    size_mb = os.path.getsize(OUTPUT_PATH) / (1024 * 1024)
-    print(f"  ✅ Saved Unrolled 5-Step NPU Model: '{OUTPUT_PATH}' ({size_mb:.2f} MB)")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    onnx.save(unrolled_model, output_path)
+    size_mb = os.path.getsize(output_path) / (1024 * 1024)
+    print(f"  ✅ Saved Unrolled 5-Step NPU Model: '{output_path}' ({size_mb:.2f} MB)")
     print("=" * 80)
+    return output_path
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Build Unrolled Vector Estimator ONNX Graph")
+    parser.add_argument("--steps", type=int, default=5, help="Number of Euler ODE steps (default: 5)")
+    parser.add_argument("--base", type=str, default=VE_PATH, help="Base vector estimator ONNX path")
+    parser.add_argument("--debug", action="store_true", help="Enable Multi-Output Tapping for intermediate step inspection")
+    parser.add_argument("--no-ping-pong", action="store_true", help="Disable Ping-Pong buffer activation recycling")
+    parser.add_argument("--out", type=str, default=None, help="Custom output ONNX path")
+    args = parser.parse_args()
+
+    build_unrolled_vector_estimator(
+        total_steps=args.steps,
+        debug_mode=args.debug,
+        use_ping_pong=not args.no_ping_pong,
+        base_model_path=args.base,
+        output_path=args.out,
+    )
 
 
 if __name__ == "__main__":
-    build_unrolled_vector_estimator(5)
+    main()

@@ -14,7 +14,8 @@ Toàn bộ hệ sinh thái tài liệu của dự án được chuẩn hóa chi 
 1. [01_technical_proposal_and_evidence.md](docs/01_technical_proposal_and_evidence.md): **Đề án Kỹ Thuật, Căn Cứ Số Liệu & Cẩm Nang Bảo Vệ** (Sự đổi mới kỹ thuật, Đánh đổi kiến trúc & Luận cứ bảo vệ trước hội đồng giám khảo).
 2. [02_hexagon_npu_deployment_report.md](docs/02_hexagon_npu_deployment_report.md): **Báo Cáo Kỹ Thuật Deploy & Tối Ưu Hóa Hexagon NPU** (Graph Refactoring, Lượng hóa W8A16, QNN Context Binary, Khắc phục triệt để lỗi QAIRT/HTP).
 3. [03_supertonic_tts_benchmark_report.md](docs/03_supertonic_tts_benchmark_report.md): **Báo Cáo Thực Nghiệm Benchmark 150 Câu & Đánh Giá Âm Thanh** (Cosine Sim = 1.000000, LSD, WER/CER Round-Trip ASR, Audio Profiling).
-4. [report_cpu.md](docs/report_cpu.md): **Báo Cáo Kỹ Thuật Tỷ Trọng Hoạt Động & Ranh Giới CPU Host** (Phân tích 5 giai đoạn CPU đảm nhận, chứng minh NPU không thể thay thế CPU và triết lý Đồng xử lý không đối xứng Asymmetric Co-processing).
+4. [04_full_npu_deployment_and_tradeoff_report.md](docs/04_full_npu_deployment_and_tradeoff_report.md): **Báo Cáo Kỹ Thuật Chiến Lược Triển Khai Full NPU & Phân Tích Đánh Đổi (Trade-offs)** (Tối ưu hóa 11 tác vụ, Unrolled ODE 1-Shot, 4 giải pháp khắc phục nhược điểm và căn cứ khoa học).
+5. [report_cpu.md](docs/report_cpu.md): **Báo Cáo Kỹ Thuật Tỷ Trọng Hoạt Động & Ranh Giới CPU Host** (Phân tích 5 giai đoạn CPU đảm nhận, chứng minh NPU không thể thay thế CPU và triết lý Đồng xử lý không đối xứng Asymmetric Co-processing).
 
 ---
 
