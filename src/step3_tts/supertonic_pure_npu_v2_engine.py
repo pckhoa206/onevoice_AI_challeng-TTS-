@@ -17,10 +17,15 @@ import soundfile as sf
 import onnxruntime as ort
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from common import _ensure_utf8_stdout
 from step3_tts.text_normalizer import TextNormalizer
 from step3_tts.style_prompt_manager import StylePromptManager
 from step3_tts.prosody_enhancer import ProsodyEnhancer
+
+try:
+    from step3_tts.qnn_custom_tokenizer.qnn_tokenizer_engine import get_qnn_tokenizer
+    _QNN_TOKENIZER_AVAILABLE = True
+except Exception:
+    _QNN_TOKENIZER_AVAILABLE = False
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 NPU_MODELS_DIR = os.path.join(ROOT, "outputs", "pure_npu_dynamic")
@@ -50,6 +55,14 @@ class SupertonicPureNPUV2Engine:
         print(" 🚀 INITIALIZING SUPERTONIC 3 — 100% PURE NPU V2 ENGINE (ACCURATE & VERIFIED)")
         print(f" • Target Audio Sample Rate: {self.target_sample_rate} Hz ({'Conversational Mode' if self.target_sample_rate == 16000 else 'Hi-Fi Studio Mode'})")
         print("=" * 85)
+
+        self.qnn_tokenizer = None
+        if _QNN_TOKENIZER_AVAILABLE:
+            try:
+                self.qnn_tokenizer = get_qnn_tokenizer()
+                print(" • Loaded Qualcomm QNN Custom Op Package [SupertonicTokenizerOp]: Mode = C++ HEXAGON HVX/HOST | Status = READY")
+            except Exception as e:
+                print(f" • QNN Custom Tokenizer fallback to Python: {e}")
 
         submodel_files = {
             "duration_predictor": "duration_predictor_npu.onnx",
@@ -221,9 +234,12 @@ class SupertonicPureNPUV2Engine:
             }
             return waveform, stats
 
-        # 3. Tokenize text using Multilingual Unicode processor ('na' for cross-lingual)
-        lang_code = "na" if self._helper_tts.is_multilingual else "en"
-        text_ids, text_mask = self._helper_tts.model.text_processor([norm_text], lang_code)
+        # 3. Tokenize text (Qualcomm QNN C++ Custom Tokenizer for EN/KO, or Multilingual Unicode processor)
+        if language in ["en", "ko"] and self.qnn_tokenizer is not None:
+            text_ids, text_mask = self.qnn_tokenizer.tokenize(norm_text, language, max_len=64)
+        else:
+            lang_code = "na" if self._helper_tts.is_multilingual else "en"
+            text_ids, text_mask = self._helper_tts.model.text_processor([norm_text], lang_code)
 
         # 4. Step 1: Duration Predictor (Pure NPU with In-Graph Mask & Fused Speed)
         t_dp_0 = time.time()

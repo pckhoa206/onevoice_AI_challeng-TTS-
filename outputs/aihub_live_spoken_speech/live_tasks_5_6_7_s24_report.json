@@ -1,0 +1,138 @@
+{
+  "timestamp": "2026-09-28 15:13:17",
+  "target_device": "Samsung Galaxy S24 Ultra",
+  "submodels": {
+    "duration_predictor": {
+      "quantize": {
+        "job_id": "j5689q6vg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/j5689q6vg/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jp0m8eq2g",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp0m8eq2g/",
+        "status": "SUCCESS"
+      },
+      "profile": {
+        "job_id": "jpvlyzo75",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpvlyzo75/",
+        "status": "SUCCESS",
+        "performance": {
+          "latency_ms": 4.903,
+          "peak_ram_mb": 102.64
+        }
+      },
+      "inference": {
+        "job_id": "jp2rqj0mg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp2rqj0mg/",
+        "status": "SUCCESS"
+      }
+    },
+    "text_encoder": {
+      "quantize": {
+        "job_id": "jpyokn475",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpyokn475/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jpxl8me1p",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpxl8me1p/",
+        "status": "SUCCESS"
+      },
+      "profile": {
+        "job_id": "jgddy08rg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgddy08rg/",
+        "status": "SUCCESS",
+        "performance": {
+          "latency_ms": 2.793,
+          "peak_ram_mb": 112.92
+        }
+      },
+      "inference": {
+        "job_id": "jp1nk3j7g",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp1nk3j7g/",
+        "status": "SUCCESS"
+      }
+    },
+    "vector_estimator": {
+      "quantize": {
+        "job_id": "jp0m8kw0g",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp0m8kw0g/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jpvlye4j5",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpvlye4j5/",
+        "status": "SUCCESS"
+      },
+      "profile": {
+        "job_id": "jpxl83v8p",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpxl83v8p/",
+        "status": "FAILED",
+        "performance": {
+          "latency_ms": "N/A",
+          "peak_ram_mb": "N/A"
+        }
+      },
+      "inference": {
+        "job_id": "jpxl8drlp",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpxl8drlp/",
+        "status": "FAILED"
+      }
+    },
+    "vocoder": {
+      "quantize": {
+        "job_id": "jgjr6qv7p",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgjr6qv7p/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jpvly7q75",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpvly7q75/",
+        "status": "SUCCESS"
+      },
+      "profile": {
+        "job_id": "jp1nk6ykg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp1nk6ykg/",
+        "status": "SUCCESS",
+        "performance": {
+          "latency_ms": 34.321,
+          "peak_ram_mb": 166.09
+        }
+      },
+      "inference": {
+        "job_id": "jpxl8x79p",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpxl8x79p/",
+        "status": "SUCCESS"
+      }
+    }
+  },
+  "audio_evaluations": [
+    {
+      "language": "en",
+      "text": "The OneVoice AI Challenge runs on Qualcomm Hexagon NPU.",
+      "voice_name": "M1",
+      "inference_job_id": "jgk2w8o2g",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jgk2w8o2g/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_tasks_567_english.wav",
+      "duration_sec": 6.97,
+      "sample_rate": 44100,
+      "voice_band_ratio": 0.9753,
+      "spectral_centroid_hz": 2332.7,
+      "quality": "VERIFIED_AUDIBLE_SPEECH"
+    },
+    {
+      "language": "ko",
+      "text": "안녕하세요 퀄컴 NPU 음성 합성 테스트입니다.",
+      "voice_name": "F1",
+      "inference_job_id": "jp2rqev4g",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jp2rqev4g/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_tasks_567_korean.wav",
+      "duration_sec": 6.97,
+      "sample_rate": 44100,
+      "voice_band_ratio": 0.9616,
+      "spectral_centroid_hz": 3874.9,
+      "quality": "VERIFIED_AUDIBLE_SPEECH"
+    }
+  ]
+}

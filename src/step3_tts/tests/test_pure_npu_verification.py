@@ -51,11 +51,13 @@ def test_submodel_accuracy():
         npu_sess = ort.InferenceSession(npu_path, providers=["CPUExecutionProvider"])
 
         t0 = time.time()
-        orig_out = orig_sess.run(None, sample_inputs)[0]
+        orig_feed = {inp.name: sample_inputs[inp.name] for inp in orig_sess.get_inputs() if inp.name in sample_inputs}
+        orig_out = orig_sess.run(None, orig_feed)[0]
         t_orig = (time.time() - t0) * 1000
 
         t0 = time.time()
-        npu_out = npu_sess.run(None, sample_inputs)[0]
+        npu_feed = {inp.name: sample_inputs[inp.name] for inp in npu_sess.get_inputs() if inp.name in sample_inputs}
+        npu_out = npu_sess.run(None, npu_feed)[0]
         t_npu = (time.time() - t0) * 1000
 
         dot_prod = np.dot(orig_out.flatten(), npu_out.flatten())

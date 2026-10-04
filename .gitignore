@@ -1,3 +1,4 @@
+# Audio datasets (raw)
 data/**/*.wav
 data/**/*.flac
 data/**/*.mp3
@@ -7,18 +8,35 @@ data/**/*.ogg
 data/mixed/
 data/mt/flores200_dataset.tar.gz
 data/mt/raw/
-outputs/
+
+# General outputs (large ONNX and raw models)
+outputs/*
+!outputs/aihub_live_spoken_speech/
+!outputs/task5_onehot_gemm_verification/
+!outputs/task6_in_graph_mask_verification/
+!outputs/task7_static_noise_verification/
+
+# Python & C++ binaries
 __pycache__/
 *.pyc
+*.dylib
+*.so
+*.o
+*.a
 .ipynb_checkpoints/
-third_party_zipformer/
-*.onnx
-*.onnx.json
 .venv/
 .DS_Store
+
+# ONNX weights & large models (>100MB)
+*.onnx
+*.onnx.json
+*.bin
+third_party_zipformer/
+token-optimizer/
+
+# Session & logs
 *.ses
 :memory:.ses
-token-optimizer/
 *.log
 *_logs.txt/
 *_err*.txt/

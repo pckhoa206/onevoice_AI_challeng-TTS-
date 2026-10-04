@@ -1,0 +1,183 @@
+{
+  "timestamp": "2026-10-03 10:17:19",
+  "target_device": "Dragonwing IQ-9075 EVK",
+  "soc": "Qualcomm QCS9075",
+  "npu": "Qualcomm Hexagon HTP v73",
+  "submodels_4stage_matrix": {
+    "duration_predictor": {
+      "quantize": {
+        "job_id": "jgol4984g",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgol4984g/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jgol49r4g",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgol49r4g/",
+        "status": "SUCCESS",
+        "target_model_id": "mnz01876m"
+      },
+      "profile": {
+        "job_id": "jgzl40lz5",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgzl40lz5/",
+        "status": "SUCCESS",
+        "latency_ms": 2.71,
+        "peak_ram_mb": 15.5
+      },
+      "inference": {
+        "job_id": "j5qlmdk4p",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/j5qlmdk4p/",
+        "status": "SUCCESS",
+        "cosine_sim": 1.0
+      }
+    },
+    "text_encoder": {
+      "quantize": {
+        "job_id": "jg9dwr7k5",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jg9dwr7k5/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jp8e43e2p",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp8e43e2p/",
+        "status": "SUCCESS",
+        "target_model_id": "mq9yld7yn"
+      },
+      "profile": {
+        "job_id": "jpe7lqoo5",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpe7lqoo5/",
+        "status": "SUCCESS",
+        "latency_ms": 1.87,
+        "peak_ram_mb": 12.41
+      },
+      "inference": {
+        "job_id": "jpyo7j3k5",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpyo7j3k5/",
+        "status": "SUCCESS",
+        "cosine_sim": 0.964
+      }
+    },
+    "vector_estimator": {
+      "quantize": {
+        "job_id": "jg9zx60wp",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jg9zx60wp/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jp8e4lmkp",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp8e4lmkp/",
+        "status": "SUCCESS",
+        "target_model_id": "mn75xy98m"
+      },
+      "profile": {
+        "job_id": "jgol4j1kg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgol4j1kg/",
+        "status": "SUCCESS",
+        "latency_ms": 72.28,
+        "peak_ram_mb": 15.15
+      },
+      "inference": {
+        "job_id": "jp8e4lxqp",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp8e4lxqp/",
+        "status": "SUCCESS",
+        "cosine_sim": 0.996
+      }
+    },
+    "vocoder": {
+      "quantize": {
+        "job_id": "jgnz7dwmg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgnz7dwmg/",
+        "status": "SUCCESS"
+      },
+      "compile": {
+        "job_id": "jp2rvqqmg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp2rvqqmg/",
+        "status": "SUCCESS",
+        "target_model_id": "mm6jk8z5q"
+      },
+      "profile": {
+        "job_id": "jgly199l5",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgly199l5/",
+        "status": "SUCCESS",
+        "latency_ms": 77.84,
+        "qnn_binary_latency_ms": 7.39,
+        "peak_ram_mb": 63.39
+      },
+      "inference": {
+        "job_id": "jp0mv8weg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp0mv8weg/",
+        "status": "SUCCESS",
+        "audio_dur_s": 12.8
+      }
+    }
+  },
+  "completed_sentences": [
+    {
+      "sentence_id": "dragonwing_english_complete",
+      "language": "en",
+      "voice_name": "M1",
+      "full_text": "The OneVoice AI Challenge runs on Qualcomm Dragonwing NPU, delivering ultra low latency and high quality speech synthesis.",
+      "complete_wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_english_complete.wav",
+      "quality_metrics": {
+        "duration_sec": 9.52,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.95,
+        "rms_energy": 0.0825,
+        "spectral_centroid_hz": 8200.8,
+        "voice_band_ratio": 0.2748,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      },
+      "chunks": [
+        {
+          "chunk_id": "en_chunk1",
+          "text": "The OneVoice AI Challenge runs on Qualcomm Dragonwing NPU,",
+          "job_id": "jpvlo38k5",
+          "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jpvlo38k5/",
+          "wav_file": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_en_chunk1.wav",
+          "duration_sec": 4.95
+        },
+        {
+          "chunk_id": "en_chunk2",
+          "text": "delivering ultra low latency and high quality speech synthesis.",
+          "job_id": "jgdd9wkrg",
+          "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jgdd9wkrg/",
+          "wav_file": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_en_chunk2.wav",
+          "duration_sec": 4.46
+        }
+      ]
+    },
+    {
+      "sentence_id": "dragonwing_korean_complete",
+      "language": "ko",
+      "voice_name": "F1",
+      "full_text": "퀄컴 드래곤윙 NPU는 엣지 디바이스에서 실시간으로 음성을 합성하며, 뛰어난 전력 효율과 뛰어난 음질을 제공합니다.",
+      "complete_wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_korean_complete.wav",
+      "quality_metrics": {
+        "duration_sec": 9.66,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.95,
+        "rms_energy": 0.0911,
+        "spectral_centroid_hz": 8150.0,
+        "voice_band_ratio": 0.2842,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      },
+      "chunks": [
+        {
+          "chunk_id": "ko_chunk1",
+          "text": "퀄컴 드래곤윙 NPU는 엣지 디바이스에서 실시간으로 음성을 합성하며,",
+          "job_id": "jp3z3kd35",
+          "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jp3z3kd35/",
+          "wav_file": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_ko_chunk1.wav",
+          "duration_sec": 5.29
+        },
+        {
+          "chunk_id": "ko_chunk2",
+          "text": "뛰어난 전력 효율과 뛰어난 음질을 제공합니다.",
+          "job_id": "jpyowe985",
+          "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jpyowe985/",
+          "wav_file": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_ko_chunk2.wav",
+          "duration_sec": 4.25
+        }
+      ]
+    }
+  ]
+}

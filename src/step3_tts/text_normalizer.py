@@ -143,6 +143,11 @@ class TextNormalizer:
         # Match numbers (with commas or dots like 50,000 or 2026)
         return re.sub(r"\b\d{1,9}\b", replace_num, text)
 
+    def spell_out_acronyms(self, text: str) -> str:
+        """Space out all-caps acronyms so the TTS model pronounces each letter normally (e.g. VNG -> V N G, AI -> A I, NPU -> N P U)."""
+        text = re.sub(r"([A-Z]{2,})", lambda m: " " + " ".join(list(m.group(1))) + " ", text)
+        return re.sub(r"\s+", " ", text).strip()
+
     def normalize_vi(self, text: str) -> str:
         text = self.clean_common(text)
         if not text:
@@ -153,9 +158,8 @@ class TextNormalizer:
         text = re.sub(r"\$\s*(\d+(?:[\.,]\d+)?)", r"\1 đô la", text)
         text = re.sub(r"(\d+(?:[\.,]\d+)?)\s*(?:₫|VND)", r"\1 đồng", text, flags=re.IGNORECASE)
 
-        # Expand acronyms & English loanwords (e.g., Challenge -> che len, VNG -> vê en giê)
-        for acronym, expanded in self.vi_acronyms.items():
-            text = re.sub(rf"\b{acronym}\b", expanded, text, flags=re.IGNORECASE)
+        # Spell out acronyms letter-by-letter as normal characters (e.g. VNG -> V N G, AI -> A I, NPU -> N P U)
+        text = self.spell_out_acronyms(text)
 
         # Convert remaining numbers to Vietnamese words
         text = self._convert_vi_numbers(text)
@@ -172,8 +176,8 @@ class TextNormalizer:
         text = re.sub(r"(\d+(?:[\.,]\d+)?)\s*(\$|USD)\s*(USD)?", r"\1 dollars", text, flags=re.IGNORECASE)
         text = re.sub(r"\$\s*(\d+(?:[\.,]\d+)?)", r"\1 dollars", text)
 
-        for acronym, expanded in self.en_acronyms.items():
-            text = re.sub(rf"\b{acronym}\b", expanded, text, flags=re.IGNORECASE)
+        # Spell out acronyms letter-by-letter as normal characters (e.g. VNG -> V N G, NPU -> N P U)
+        text = self.spell_out_acronyms(text)
         return text
 
     def normalize_ko(self, text: str) -> str:
@@ -183,8 +187,8 @@ class TextNormalizer:
 
         text = re.sub(r"(\d+(?:[\.,]\d+)?)\s*(?:원|₩)", r"\1원", text)
 
-        for acronym, expanded in self.ko_acronyms.items():
-            text = re.sub(rf"\b{acronym}\b", expanded, text, flags=re.IGNORECASE)
+        # Spell out acronyms letter-by-letter as normal characters (e.g. NPU -> N P U, SNS -> S N S)
+        text = self.spell_out_acronyms(text)
         return text
 
     def normalize_zh(self, text: str) -> str:
@@ -194,8 +198,8 @@ class TextNormalizer:
 
         text = re.sub(r"(\d+(?:[\.,]\d+)?)\s*(?:元|块|￥)", r"\1元", text)
 
-        for acronym, expanded in self.zh_acronyms.items():
-            text = re.sub(rf"\b{acronym}\b", acronym if acronym not in self.zh_acronyms else self.zh_acronyms[acronym], text, flags=re.IGNORECASE)
+        # Spell out acronyms letter-by-letter as normal characters (e.g. NPU -> N P U, AI -> A I)
+        text = self.spell_out_acronyms(text)
         return text
 
     def normalize(self, text: str, lang: str) -> str:

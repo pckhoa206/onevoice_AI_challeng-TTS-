@@ -1,0 +1,58 @@
+[
+  {
+    "language": "vi",
+    "text": "Nuôi tuần lộc là sinh kế quan trọng của người dân vùng Bắc Âu.",
+    "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/task7_static_noise_verification/static_noise_vi.wav",
+    "duration_sec": 5.71,
+    "total_latency_ms": 697.1,
+    "rtf": 0.122,
+    "metrics": {
+      "rms": 0.1554,
+      "peak": 0.9185,
+      "centroid_hz": 1129.9,
+      "voice_energy_ratio_pct": 98.5
+    }
+  },
+  {
+    "language": "en",
+    "text": "Reindeer husbandry is an important livelihood for the Sami people in Northern Europe.",
+    "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/task7_static_noise_verification/static_noise_en.wav",
+    "duration_sec": 6.62,
+    "total_latency_ms": 865.4,
+    "rtf": 0.1308,
+    "metrics": {
+      "rms": 0.094,
+      "peak": 0.8716,
+      "centroid_hz": 1300.8,
+      "voice_energy_ratio_pct": 98.08
+    }
+  },
+  {
+    "language": "ko",
+    "text": "순록 축산은 북유럽 사미족의 중요한 전통 생계 수단 중 하나입니다.",
+    "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/task7_static_noise_verification/static_noise_ko.wav",
+    "duration_sec": 6.34,
+    "total_latency_ms": 826.2,
+    "rtf": 0.1303,
+    "metrics": {
+      "rms": 0.1251,
+      "peak": 0.8918,
+      "centroid_hz": 1701.0,
+      "voice_energy_ratio_pct": 98.3
+    }
+  },
+  {
+    "language": "zh",
+    "text": "驯鹿养殖是北欧萨米人的重要生计来源。",
+    "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/task7_static_noise_verification/static_noise_zh.wav",
+    "duration_sec": 3.46,
+    "total_latency_ms": 630.6,
+    "rtf": 0.1823,
+    "metrics": {
+      "rms": 0.2096,
+      "peak": 1.0008,
+      "centroid_hz": 1607.8,
+      "voice_energy_ratio_pct": 97.85
+    }
+  }
+]

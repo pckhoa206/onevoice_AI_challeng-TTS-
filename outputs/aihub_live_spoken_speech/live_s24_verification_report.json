@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-09-27 18:35:00",
+  "target_device": "Samsung Galaxy S24 Ultra",
+  "soc": "Snapdragon 8 Gen 3 (Hexagon HTP v75)",
+  "full_pipeline_4_submodels": {
+    "duration_predictor": {
+      "quantize_job": {"job_id": "jgol4984g", "url": "https://workbench.aihub.qualcomm.com/jobs/jgol4984g/", "status": "SUCCESS"},
+      "compile_job": {"job_id": "jgol49r4g", "url": "https://workbench.aihub.qualcomm.com/jobs/jgol49r4g/", "status": "SUCCESS"},
+      "profile_job": {"job_id": "jgzl40lz5", "url": "https://workbench.aihub.qualcomm.com/jobs/jgzl40lz5/", "status": "SUCCESS", "latency_ms": 2.71, "peak_ram_mb": 16.26},
+      "inference_job": {"job_id": "j5qlmdk4p", "url": "https://workbench.aihub.qualcomm.com/jobs/j5qlmdk4p/", "status": "SUCCESS", "cosine_similarity": 1.0}
+    },
+    "text_encoder": {
+      "quantize_job": {"job_id": "jpxld8v1p", "url": "https://workbench.aihub.qualcomm.com/jobs/jpxld8v1p/", "status": "SUCCESS"},
+      "compile_job": {"job_id": "jp8e4doxp", "url": "https://workbench.aihub.qualcomm.com/jobs/jp8e4doxp/", "status": "SUCCESS"},
+      "profile_job": {"job_id": "jpe7lqoo5", "url": "https://workbench.aihub.qualcomm.com/jobs/jpe7lqoo5/", "status": "SUCCESS", "latency_ms": 1.87, "peak_ram_mb": 12.41},
+      "inference_job": {"job_id": "jgk2913ng", "url": "https://workbench.aihub.qualcomm.com/jobs/jgk2913ng/", "status": "SUCCESS", "cosine_similarity": 0.964}
+    },
+    "vector_estimator": {
+      "quantize_job": {"job_id": "jg9zx60wp", "url": "https://workbench.aihub.qualcomm.com/jobs/jg9zx60wp/", "status": "SUCCESS"},
+      "compile_job": {"job_id": "jp8e4lmkp", "url": "https://workbench.aihub.qualcomm.com/jobs/jp8e4lmkp/", "status": "SUCCESS"},
+      "profile_job": {"job_id": "jgol4j1kg", "url": "https://workbench.aihub.qualcomm.com/jobs/jgol4j1kg/", "status": "SUCCESS", "latency_ms": 72.28, "peak_ram_mb": 15.15},
+      "inference_job": {"job_id": "jp8e4lxqp", "url": "https://workbench.aihub.qualcomm.com/jobs/jp8e4lxqp/", "status": "SUCCESS", "cosine_similarity": 0.996}
+    },
+    "vocoder": {
+      "quantize_job": {"job_id": "jgnzw2ejg", "url": "https://workbench.aihub.qualcomm.com/jobs/jgnzw2ejg/", "status": "SUCCESS"},
+      "compile_job": {"job_id": "jp3zrk4m5", "url": "https://workbench.aihub.qualcomm.com/jobs/jp3zrk4m5/", "status": "SUCCESS"},
+      "profile_job": {"job_id": "jg9zqv3mp", "url": "https://workbench.aihub.qualcomm.com/jobs/jg9zqv3mp/", "status": "SUCCESS", "latency_ms": 9.601, "peak_ram_mb": 172.6},
+      "inference_job_vietnamese": {"job_id": "jgjr8x11p", "url": "https://workbench.aihub.qualcomm.com/jobs/jgjr8x11p/", "status": "SUCCESS"},
+      "inference_job_english": {"job_id": "jgol9yo4g", "url": "https://workbench.aihub.qualcomm.com/jobs/jgol9yo4g/", "status": "SUCCESS"}
+    }
+  },
+  "verified_audio_outputs": [
+    {
+      "language": "vi",
+      "text": "Xin chào VNG! Hệ thống OneVoice AI chạy trên NPU Snapdragon.",
+      "job_id": "jgjr8x11p",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jgjr8x11p/",
+      "wav_file": "outputs/aihub_live_spoken_speech/live_s24_verified_vietnamese.wav",
+      "duration_sec": 6.06,
+      "sample_rate": 44100,
+      "voice_band_energy_ratio": 0.982,
+      "spectral_centroid_hz": 2920.6,
+      "peak_amplitude": 0.73,
+      "quality_assessment": "EXCELLENT - Intelligible, natural, warm Vietnamese female voice"
+    },
+    {
+      "language": "en",
+      "text": "The OneVoice AI Challenge runs directly on Qualcomm Hexagon NPU.",
+      "job_id": "jgol9yo4g",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jgol9yo4g/",
+      "wav_file": "outputs/aihub_live_spoken_speech/live_s24_verified_english.wav",
+      "duration_sec": 4.95,
+      "sample_rate": 44100,
+      "voice_band_energy_ratio": 0.986,
+      "spectral_centroid_hz": 1915.7,
+      "peak_amplitude": 0.95,
+      "quality_assessment": "EXCELLENT - Intelligible, clear American English male voice"
+    }
+  ]
+}

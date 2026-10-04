@@ -1,0 +1,141 @@
+{
+  "timestamp": "2026-10-02 20:39:08",
+  "target_device": "Samsung Galaxy S24 Ultra",
+  "stages_overview": {
+    "stage1_quantize": {
+      "job_id": "jgjr6qv7p",
+      "url": "https://workbench.aihub.qualcomm.com/jobs/jgjr6qv7p/",
+      "status": "SUCCESS"
+    },
+    "stage2_compile": {
+      "job_id": "jpvly7q75",
+      "url": "https://workbench.aihub.qualcomm.com/jobs/jpvly7q75/",
+      "status": "SUCCESS",
+      "target_model_id": "mm6j7272q"
+    },
+    "stage3_profile": {
+      "job_id": "jp1nk6ykg",
+      "url": "https://workbench.aihub.qualcomm.com/jobs/jp1nk6ykg/",
+      "status": "SUCCESS",
+      "latency_ms": 34.32,
+      "peak_ram_mb": 166.09
+    },
+    "stage4_inference_model_id": "mm6j7272q"
+  },
+  "test_results": [
+    {
+      "test_id": "input1_en_technical",
+      "language": "en",
+      "difficulty": "Technical & Proper Nouns",
+      "text": "Qualcomm Hexagon NPU on Samsung Galaxy S24 Ultra accelerates AI speech synthesis.",
+      "voice_name": "M1",
+      "job_id": "jglyz36j5",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jglyz36j5/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_s24_input1_en_technical.wav",
+      "metrics": {
+        "duration_sec": 5.85,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.4846,
+        "rms_energy": 0.0555,
+        "spectral_centroid_hz": 2812.9,
+        "voice_band_ratio": 0.7387,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      }
+    },
+    {
+      "test_id": "input2_en_punctuation",
+      "language": "en",
+      "difficulty": "Punctuation & Emotion",
+      "text": "Can on-device AI run at zero latency? Yes! It is fast, accurate, and robust.",
+      "voice_name": "M1",
+      "job_id": "jgol03kqg",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jgol03kqg/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_s24_input2_en_punctuation.wav",
+      "metrics": {
+        "duration_sec": 5.85,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.3888,
+        "rms_energy": 0.0449,
+        "spectral_centroid_hz": 3024.4,
+        "voice_band_ratio": 0.6907,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      }
+    },
+    {
+      "test_id": "input3_ko_conversational",
+      "language": "ko",
+      "difficulty": "Conversational & Honorifics",
+      "text": "안녕하세요! 퀄컴 인공지능 NPU 음성 합성 시스템에 오신 것을 진심으로 환영합니다.",
+      "voice_name": "F1",
+      "job_id": "jgjrme2vp",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jgjrme2vp/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_s24_input3_ko_conversational.wav",
+      "metrics": {
+        "duration_sec": 6.06,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.2595,
+        "rms_energy": 0.0528,
+        "spectral_centroid_hz": 2945.0,
+        "voice_band_ratio": 0.7593,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      }
+    },
+    {
+      "test_id": "input4_ko_technical_mixed",
+      "language": "ko",
+      "difficulty": "Technical Korean & Alphanumeric",
+      "text": "갤럭시 S24 울트라의 NPU 성능은 실시간 음성 처리에 있어 최고의 전력 효율을 보여줍니다.",
+      "voice_name": "F1",
+      "job_id": "jpyow6j85",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jpyow6j85/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_s24_input4_ko_technical_mixed.wav",
+      "metrics": {
+        "duration_sec": 5.99,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.3354,
+        "rms_energy": 0.0516,
+        "spectral_centroid_hz": 3200.7,
+        "voice_band_ratio": 0.7027,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      }
+    },
+    {
+      "test_id": "input5_en_short_boundary",
+      "language": "en",
+      "difficulty": "Ultra-Short Boundary",
+      "text": "OneVoice AI.",
+      "voice_name": "M1",
+      "job_id": "jpe71kko5",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jpe71kko5/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_s24_input5_en_short_boundary.wav",
+      "metrics": {
+        "duration_sec": 1.53,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.2548,
+        "rms_energy": 0.0342,
+        "spectral_centroid_hz": 2897.7,
+        "voice_band_ratio": 0.7257,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      }
+    },
+    {
+      "test_id": "input6_en_long_stress",
+      "language": "en",
+      "difficulty": "Maximum Length Stress Test",
+      "text": "The advanced neural vocoder decodes complex acoustic representations into crystal clear speech waveforms directly on edge hardware.",
+      "voice_name": "M1",
+      "job_id": "jp1nlee8g",
+      "dashboard_url": "https://workbench.aihub.qualcomm.com/jobs/jp1nlee8g/",
+      "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_s24_input6_en_long_stress.wav",
+      "metrics": {
+        "duration_sec": 5.02,
+        "sample_rate": 44100,
+        "peak_amplitude": 0.3964,
+        "rms_energy": 0.0427,
+        "spectral_centroid_hz": 2182.7,
+        "voice_band_ratio": 0.8163,
+        "quality_assessment": "BORDERLINE_OR_ANOMALY"
+      }
+    }
+  ]
+}
