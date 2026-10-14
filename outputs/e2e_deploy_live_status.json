@@ -1,0 +1,96 @@
+{
+  "deployment_session": "FRESH_DEPLOY_POST_USER_REQUEST_17_51",
+  "device": "Dragonwing IQ-9075 EVK",
+  "os": "1.9",
+  "chipset": "Qualcomm Hexagon HTP v73",
+  "timestamp": "2026-10-13 19:15:10",
+  "fresh_jobs": {
+    "compile": {
+      "duration_predictor": {
+        "job_id": "jgod4y0d5",
+        "target_model": "mmdle5kkn",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgod4y0d5/"
+      },
+      "text_encoder": {
+        "job_id": "jpv293omg",
+        "target_model": "mn440g8rn",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jpv293omg/"
+      },
+      "vector_estimator": {
+        "job_id": "j5m9drrqg",
+        "target_model": "mqv9l310m",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/j5m9drrqg/"
+      },
+      "vocoder": {
+        "job_id": "jgzz4e96g",
+        "target_model": "mq3d5x93n",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgzz4e96g/"
+      }
+    },
+    "profile": {
+      "duration_predictor": {
+        "job_id": "jp1ov0ll5",
+        "latency_ms": 2.69,
+        "ram_mb": 13.47,
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp1ov0ll5/"
+      },
+      "text_encoder": {
+        "job_id": "jgd6zw9lp",
+        "latency_ms": 2.98,
+        "ram_mb": 15.23,
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jgd6zw9lp/"
+      },
+      "vector_estimator": {
+        "job_id": "jp8j4oo85",
+        "latency_ms": 88.23,
+        "ram_mb": 13.84,
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp8j4oo85/"
+      },
+      "vocoder": {
+        "job_id": "j57o7z3rg",
+        "latency_ms": 55.16,
+        "ram_mb": 61.05,
+        "url": "https://workbench.aihub.qualcomm.com/jobs/j57o7z3rg/"
+      }
+    },
+    "inference": {
+      "vector_estimator": {
+        "job_id": "jglw1z68p",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jglw1z68p/",
+        "status": "SUCCESS",
+        "hardware_device": "Dragonwing IQ-9075 EVK",
+        "output_shape": [
+          1,
+          144,
+          100
+        ]
+      },
+      "vocoder_en": {
+        "job_id": "jp2ov6lrg",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/jp2ov6lrg/",
+        "status": "SUCCESS",
+        "metrics": {
+          "duration_sec": 5.66,
+          "voice_band_ratio_pct": 74.87,
+          "spectral_centroid_hz": 2510.0,
+          "peak_amplitude": 0.9,
+          "status": "HEALTHY_SPEECH"
+        },
+        "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_fresh_english_complete.wav"
+      },
+      "vocoder_ko": {
+        "job_id": "j5q4mk9ng",
+        "url": "https://workbench.aihub.qualcomm.com/jobs/j5q4mk9ng/",
+        "status": "SUCCESS",
+        "metrics": {
+          "duration_sec": 5.11,
+          "voice_band_ratio_pct": 71.97,
+          "spectral_centroid_hz": 2960.2,
+          "peak_amplitude": 0.9,
+          "status": "HEALTHY_SPEECH"
+        },
+        "wav_path": "/Users/khoa/study/Onevoice_AI_VNG/outputs/aihub_live_spoken_speech/live_dragonwing_fresh_korean_complete.wav"
+      }
+    }
+  }
+}

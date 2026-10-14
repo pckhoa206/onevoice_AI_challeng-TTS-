@@ -12,9 +12,7 @@ data/mt/raw/
 # General outputs (large ONNX and raw models)
 outputs/*
 !outputs/aihub_live_spoken_speech/
-!outputs/task5_onehot_gemm_verification/
-!outputs/task6_in_graph_mask_verification/
-!outputs/task7_static_noise_verification/
+!outputs/e2e_deploy_live_status.json
 
 # Python & C++ binaries
 __pycache__/
